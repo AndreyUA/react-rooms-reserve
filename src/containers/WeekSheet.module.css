@@ -1,0 +1,6 @@
+.WeekSheet {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 1890px;
+}
