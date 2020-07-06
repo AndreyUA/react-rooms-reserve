@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import classes from "./App.module.css";
 import WeekSheet from "./containers/WeekSheet";
 
 class App extends Component {
@@ -7,6 +7,246 @@ class App extends Component {
     super(props);
     this.state = {
       dates: [],
+      datesNext: [],
+      content: [
+        {
+          one: "test",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+  
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+  
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+  
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+  
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+  
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        }
+      ],
+
+      contentNext: [
+        {
+          one: "test",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+  
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+  
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+  
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+  
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+  
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        },
+        {
+          one: "",
+          two: "",
+          three: "",
+          four: "",
+          five: ""
+        }
+      ],
     };
   }
 
@@ -822,16 +1062,25 @@ class App extends Component {
   };
 
   componentDidMount() {
+    const twoWeeksDates = this.getTwoWeeks(new Date())
     this.setState({
-      dates: this.getTwoWeeks(new Date()),
+      dates: [twoWeeksDates[0], twoWeeksDates[1], twoWeeksDates[2], twoWeeksDates[3], twoWeeksDates[4],],
+      datesNext: [twoWeeksDates[5], twoWeeksDates[6], twoWeeksDates[7], twoWeeksDates[8], twoWeeksDates[9],],
     });
-  }
+  };
 
   render() {
     return (
-      <>
-        <WeekSheet dates={this.state.dates} />
-      </>
+      <div className={classes.App}>
+        <WeekSheet
+        dates={this.state.dates}
+        content={this.state.content}
+        />
+        <WeekSheet
+        dates={this.state.datesNext}
+        content={this.state.contentNext}
+        />
+      </div>
     );
   }
 }
