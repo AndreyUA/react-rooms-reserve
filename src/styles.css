@@ -2,14 +2,7 @@
   margin: 0;
 }
 
-.WeekSheet {
-  min-width: 1800px;
-  display: flex;
-  flex-wrap: wrap;
-  background: #f3f0f0;
-}
-
-.WeekSheet-week {
-  display: flex;
+#root {
   width: 100%;
+  min-width: 1800px;
 }

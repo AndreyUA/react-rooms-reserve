@@ -1,0 +1,18 @@
+.WeekSheet {
+  min-width: 1800px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.WeekSheet-number {
+  width: 100%;
+}
+
+.WeekSheet-number h2 {
+  text-align: center;
+}
+
+.WeekSheet-week {
+  display: flex;
+  width: 100%;
+}
