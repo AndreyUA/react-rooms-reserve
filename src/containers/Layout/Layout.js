@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Layout.css";
 
+import { NavLink } from "react-router-dom";
+
 class Layout extends Component {
   render() {
     return (
@@ -8,13 +10,15 @@ class Layout extends Component {
         <nav className="Layout-nav">
           <ul>
             <li>
-              <a href="/">Authorization</a>
+              <NavLink to="/" exact>
+                Authorization
+              </NavLink>
             </li>
             <li>
-              <a href="/room1">Room #1</a>
+              <NavLink to="/room1">Room #1</NavLink>
             </li>
             <li>
-              <a href="/room2">Room #2</a>
+              <NavLink to="/room2">Room #2</NavLink>
             </li>
           </ul>
         </nav>

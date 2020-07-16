@@ -3,7 +3,6 @@
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
-  max-height: 1440px;
   background: #f3f0f0;
 }
 
@@ -44,6 +43,11 @@
 }
 
 .Layout-nav ul li a:hover {
+  color: crimson;
+  background-color: #1d1d1d;
+}
+
+.Layout-nav ul li .active {
   color: crimson;
   background-color: #1d1d1d;
 }

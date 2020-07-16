@@ -39,19 +39,15 @@
   font-weight: 700;
   background-color: #f3f0f0;
   box-shadow: none;
-
   transition: box-shadow, width, height 0.4s ease-in-out;
 }
 
 .Day-body-cell-content:focus {
   background-color: #fff;
-
   outline-color: crimson;
   outline-width: 3px;
   outline-style: inset;
-
   box-shadow: 0 0 4px 4px crimson;
-
   position: absolute;
   width: 99%;
   height: 100%;
