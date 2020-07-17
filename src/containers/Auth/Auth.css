@@ -11,10 +11,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 300px;
+  width: 400px;
   height: 280px;
   border-radius: 5px;
-  background: linear-gradient(270deg, #dddddd 0%, #ef596d 100%);
+  background: linear-gradient(270deg, #dddddd 0%, #c5c5c5 100%);
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
@@ -24,9 +24,13 @@
 
 .Auth input {
   outline: none;
+  width: 300px;
+  height: 30px;
 }
 
 .Auth-control {
+  display: flex;
+  justify-content: center;
   margin: 20px 0;
 }
 
@@ -35,6 +39,7 @@
   padding: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .Auth-correct {
@@ -46,4 +51,50 @@
   font-size: 15px;
   text-align: center;
   color: red;
+}
+
+.Auth-log,
+.Auth-reg {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: 1px solid rgb(85, 85, 85);
+  color: #000;
+  margin-right: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 12px;
+  transition: background, color .4s ease-in-out;
+}
+
+.Auth-log {
+  background: rgb(131, 231, 15);
+}
+
+.Auth-log:hover {
+  color: #fff;
+  cursor: pointer;
+  background: rgb(89, 167, 0);
+}
+
+.Auth-reg {
+  background: #2884f6;
+}
+
+.Auth-reg:hover {
+  color: #fff;
+  cursor: pointer;
+  background: #094792;
+}
+
+.Auth-log:focus,
+.Auth-reg:focus {
+  outline: none;
+}
+
+.Auth-log:disabled,
+.Auth-reg:disabled {
+  background: #ccc;
+  color: #000;
+  cursor: not-allowed;
 }
