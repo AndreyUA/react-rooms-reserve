@@ -1,5 +1,6 @@
 import React from "react";
 
+import sad_face from "../../pics/sad_face.svg";
 import "./ErrorPage.css";
 
 const ErrorPage = () => {
@@ -12,12 +13,9 @@ const ErrorPage = () => {
       <h3 className="ErrorPage-info">
         Please, login or check if the link is correct...
       </h3>
+      <img className="ErrorPage-face" src={sad_face} alt="sad_face"/>
     </>
   );
 };
 
 export default ErrorPage;
-
-//нужно добавить грустный смайлик после текста
-//и можно чтоб крутился, как у реакта логотип
-//и чтоб крутился на заднем фоне текста

@@ -36,6 +36,7 @@
 
 .Auth-email,
 .Auth-pass {
+  position: relative;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -97,4 +98,11 @@
   background: #ccc;
   color: #000;
   cursor: not-allowed;
+}
+
+.Auth-pass-show {
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: 16px;
 }

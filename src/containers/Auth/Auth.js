@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Auth.css";
 
+import eye from "../../pics/eye.svg";
+import eye_off from "../../pics/eye_off.svg";
 import is from "is_js";
 
 class Auth extends Component {
@@ -8,12 +10,13 @@ class Auth extends Component {
     isEmailValid: true,
     isPasswordValid: true,
     email: {
-      value: "",
+      value: "your email",
       errorMessage: "Enter correct email",
     },
     password: {
-      value: "",
+      value: "your password",
       errorMessage: "Enter correct password",
+      show: false,
     },
   };
 
@@ -68,6 +71,16 @@ class Auth extends Component {
     });
   };
 
+  showPasswordHandler = (e) => {
+    e.preventDefault();
+    const password = { ...this.state.password };
+
+    password.show = !this.state.password.show;
+    this.setState({
+      password,
+    });
+  };
+
   render() {
     return (
       <div className="Auth">
@@ -76,7 +89,13 @@ class Auth extends Component {
           <form onSubmit={this.submitHandler}>
             <div className="Auth-email">
               <label htmlFor="Auth-email">Email:</label>
-              <input onChange={this.emailChangeHandler} id="Auth-email" />
+              <input
+                type="email"
+                onChange={this.emailChangeHandler}
+                id="Auth-email"
+                required
+                placeholder="email"
+              />
             </div>
 
             {this.state.isEmailValid ? (
@@ -87,7 +106,19 @@ class Auth extends Component {
 
             <div className="Auth-pass">
               <label htmlFor="Auth-pass">Password:</label>
-              <input onChange={this.passwordChangeHandler} id="Auth-pass" />
+              <input
+                type={this.state.password.show ? "text" : "password"}
+                onChange={this.passwordChangeHandler}
+                id="Auth-pass"
+                required
+                placeholder="password"
+              />
+              <div
+                onClick={this.showPasswordHandler}
+                className="Auth-pass-show"
+              >
+                <img src={this.state.password.show ? eye_off : eye} alt="eye" />
+              </div>
             </div>
             {this.state.isPasswordValid ? (
               <p className="Auth-correct">Enter your password</p>

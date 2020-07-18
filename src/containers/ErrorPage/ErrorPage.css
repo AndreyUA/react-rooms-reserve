@@ -18,3 +18,31 @@
   padding-top: 20px;
   font-style: italic;
 }
+
+.ErrorPage-face {
+  display: block;
+  position: absolute;
+  z-index: 99;
+  top: 15%;
+  left: 30%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  
+  animation-name: rotation;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.ErrorPage-main,
+.ErrorPage-small,
+.ErrorPage-info {
+  z-index: 1000;
+}
+
+@keyframes rotation {
+   0% {
+       transform:rotate(0deg);}
+   100% {
+       transform:rotate(360deg);}
+}
