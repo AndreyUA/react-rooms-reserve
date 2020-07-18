@@ -1,3 +1,11 @@
+main {
+  align-items: center;
+}
+
+.ErrorPage {
+  z-index: 1000;
+}
+
 .ErrorPage-main {
   color: crimson;
   text-align: center;
@@ -20,29 +28,17 @@
 }
 
 .ErrorPage-face {
-  display: block;
   position: absolute;
-  z-index: 99;
-  top: 15%;
-  left: 30%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  
-  animation-name: rotation;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-}
+  width: 540px;
+  z-index: -1;
 
-.ErrorPage-main,
-.ErrorPage-small,
-.ErrorPage-info {
-  z-index: 1000;
+  animation: rotation 3s infinite ease-in-out;
 }
-
 @keyframes rotation {
-   0% {
-       transform:rotate(0deg);}
-   100% {
-       transform:rotate(360deg);}
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

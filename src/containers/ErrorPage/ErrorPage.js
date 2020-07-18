@@ -6,14 +6,16 @@ import "./ErrorPage.css";
 const ErrorPage = () => {
   return (
     <>
-      <h1 className="ErrorPage-main">
-        404 <br /> ERROR
-      </h1>
-      <h2 className="ErrorPage-small">Page not found!</h2>
-      <h3 className="ErrorPage-info">
-        Please, login or check if the link is correct...
-      </h3>
-      <img className="ErrorPage-face" src={sad_face} alt="sad_face"/>
+      <div className="ErrorPage">
+        <h1 className="ErrorPage-main">
+          404 <br /> ERROR
+        </h1>
+        <h2 className="ErrorPage-small">Page not found!</h2>
+        <h3 className="ErrorPage-info">
+          Please, login or check if the link is correct...
+        </h3>
+        <img className="ErrorPage-face" src={sad_face} alt="sad_face" />
+      </div>
     </>
   );
 };
