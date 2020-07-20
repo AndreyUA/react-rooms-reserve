@@ -26,7 +26,7 @@ const Cell = (props) => {
         value={
           props.content[props.dayNumber][
             Object.keys(props.content[props.dayNumber])[props.index]
-          ]
+          ].text
         }
       />
     </div>
