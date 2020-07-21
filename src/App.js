@@ -36,6 +36,16 @@ class App extends Component {
           "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json",
           this.state.contentNextFirst
         );
+
+        await axios.post(
+          "https://react-rooms-reserve.firebaseio.com/second-room-this-week.json",
+          this.state.contentSecond
+        );
+
+        await axios.post(
+          "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json",
+          this.state.contentNextSecond
+        );
       } catch (error) {
         console.log(error);
       }
@@ -45,6 +55,7 @@ class App extends Component {
   async componentDidMount() {
     const post = false;
 
+    //временная конструкция, удали потом обязательно
     if (post) {
       try {
         const response = await axios.post(
@@ -154,13 +165,51 @@ class App extends Component {
     });
   };
 
+  changeHandlerSecondRoomCurrentWeek = ([day, number], e) => {
+    let data = [...this.state.contentSecond];
+
+    const key = Object.keys(data[day])[number];
+
+    //no empty cells whit spaces
+    if (e.target.value.trim().length === 0) {
+      data[day][key].text = "";
+    } else {
+      data[day][key].text = e.target.value;
+    }
+
+    this.setState({
+      contentSecond: data,
+    });
+  };
+
   focusHandler = () => {
     this.setState({
       isTyping: !this.state.isTyping,
     });
   };
 
-  ///осталось допилить второй зал. УРА, ЗАПИСЬ РАБОТАЕТ!!!
+  changeHandlerSecondRoomNextWeek = ([day, number], e) => {
+    let data = [...this.state.contentNextSecond];
+
+    const key = Object.keys(data[day])[number];
+
+    //no empty cells whit spaces
+    if (e.target.value.trim().length === 0) {
+      data[day][key].text = "";
+    } else {
+      data[day][key].text = e.target.value;
+    }
+
+    this.setState({
+      contentNextSecond: data,
+    });
+  };
+
+  focusHandler = () => {
+    this.setState({
+      isTyping: !this.state.isTyping,
+    });
+  };
 
   render() {
     const week1 = (
@@ -178,9 +227,14 @@ class App extends Component {
 
     const week2 = (
       <WeekSheet
+        changeHandlerSecondRoomCurrentWeek={
+          this.changeHandlerSecondRoomCurrentWeek
+        }
+        changeHandlerSecondRoomNextWeek={this.changeHandlerSecondRoomNextWeek}
         content={this.state.contentSecond}
         contentNext={this.state.contentNextSecond}
         number="2"
+        focusHandler={this.focusHandler}
       />
     );
 
@@ -192,14 +246,11 @@ class App extends Component {
             path="/room1"
             render={() => (this.state.isLoading ? <Loader /> : week1)}
           />
-          {/*
-         
-         <Route
+
+          <Route
             path="/room2"
             render={() => (this.state.isLoading ? <Loader /> : week2)}
           />
-         
-         */}
           <Route component={ErrorPage} />
         </Switch>
       </Layout>
@@ -216,3 +267,12 @@ export default App;
 //пример на всякий случай:
 //{this.state.isLoggedIn ? <Route path="/room1" render={() => week1} /> : <Route component={ErrorPage} />}
 //{this.state.isLoggedIn ? <Route path="/room2" render={() => week2} /> : <Route component={ErrorPage} />}
+
+
+//что нужно сделать:
+//красиво оформить загрузку: спиннер поставить в середину страницы или что-то такое
+//посмотреть страницу ошибки. снова съехала грустная рожа
+//можно уже делать авторизацию
+//программа максимум: реализовать переключение на следующую неделю
+
+//идея: сделать так, чтоб заполненная клетка имела другой цвет.

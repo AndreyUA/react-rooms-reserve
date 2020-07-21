@@ -64,7 +64,10 @@ class WeekSheet extends Component {
                   day={this.state.days[index]}
                   times={this.state.times}
                   content={this.props.content}
-                  contentChangeHandler={this.props.changeHandlerFirstRoomCurrentWeek}
+                  contentChangeHandler={
+                    this.props.changeHandlerFirstRoomCurrentWeek ||
+                    this.props.changeHandlerSecondRoomCurrentWeek
+                  }
                   days={this.state.days}
                   dayNumber={index}
                   focusHandler={this.props.focusHandler}
@@ -81,7 +84,10 @@ class WeekSheet extends Component {
                   day={this.state.days[index]}
                   times={this.state.times}
                   content={this.props.contentNext}
-                  contentChangeHandler={this.props.changeHandlerFirstRoomNextWeek}
+                  contentChangeHandler={
+                    this.props.changeHandlerFirstRoomNextWeek ||
+                    this.props.changeHandlerSecondRoomNextWeek
+                  }
                   days={this.state.days}
                   dayNumber={index}
                   focusHandler={this.props.focusHandler}
