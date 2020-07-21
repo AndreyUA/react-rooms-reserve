@@ -812,6 +812,302 @@ export const getTwoWeeks = (dateNow) => {
   //функция определения последнего элемента из FireBase
   export const lastElementFromDataBase = (obj) => obj.data[Object.keys(obj.data)[Object.keys(obj.data).length-1]];
 
+  //функция генерации пустой недели
+
+  export const generateEmpryWeek = () => 
+  [
+        {
+          a: {
+            userId: "",
+            text: "",
+          },
+          b: {
+            userId: "",
+            text: "",
+          },
+          c: {
+            userId: "",
+            text: "",
+          },
+          d: {
+            userId: "",
+            text: "",
+          },
+          e: {
+            userId: "",
+            text: "",
+          },
+          f: {
+            userId: "",
+            text: "",
+          },
+          g: {
+            userId: "",
+            text: "",
+          },
+          h: {
+            userId: "",
+            text: "",
+          },
+          i: {
+            userId: "",
+            text: "",
+          },
+          j: {
+            userId: "",
+            text: "",
+          },
+          k: {
+            userId: "",
+            text: "",
+          },
+          l: {
+            userId: "",
+            text: "",
+          },
+          m: {
+            userId: "",
+            text: "",
+          },
+          n: {
+            userId: "",
+            text: "",
+          },
+        },
+        {
+          a: {
+            userId: "",
+            text: "",
+          },
+          b: {
+            userId: "",
+            text: "",
+          },
+          c: {
+            userId: "",
+            text: "",
+          },
+          d: {
+            userId: "",
+            text: "",
+          },
+          e: {
+            userId: "",
+            text: "",
+          },
+          f: {
+            userId: "",
+            text: "",
+          },
+          g: {
+            userId: "",
+            text: "",
+          },
+          h: {
+            userId: "",
+            text: "",
+          },
+          i: {
+            userId: "",
+            text: "",
+          },
+          j: {
+            userId: "",
+            text: "",
+          },
+          k: {
+            userId: "",
+            text: "",
+          },
+          l: {
+            userId: "",
+            text: "",
+          },
+          m: {
+            userId: "",
+            text: "",
+          },
+          n: {
+            userId: "",
+            text: "",
+          },
+        },
+        {
+          a: {
+            userId: "",
+            text: "",
+          },
+          b: {
+            userId: "",
+            text: "",
+          },
+          c: {
+            userId: "",
+            text: "",
+          },
+          d: {
+            userId: "",
+            text: "",
+          },
+          e: {
+            userId: "",
+            text: "",
+          },
+          f: {
+            userId: "",
+            text: "",
+          },
+          g: {
+            userId: "",
+            text: "",
+          },
+          h: {
+            userId: "",
+            text: "",
+          },
+          i: {
+            userId: "",
+            text: "",
+          },
+          j: {
+            userId: "",
+            text: "",
+          },
+          k: {
+            userId: "",
+            text: "",
+          },
+          l: {
+            userId: "",
+            text: "",
+          },
+          m: {
+            userId: "",
+            text: "",
+          },
+          n: {
+            userId: "",
+            text: "",
+          },
+        },
+        {
+          a: {
+            userId: "",
+            text: "",
+          },
+          b: {
+            userId: "",
+            text: "",
+          },
+          c: {
+            userId: "",
+            text: "",
+          },
+          d: {
+            userId: "",
+            text: "",
+          },
+          e: {
+            userId: "",
+            text: "",
+          },
+          f: {
+            userId: "",
+            text: "",
+          },
+          g: {
+            userId: "",
+            text: "",
+          },
+          h: {
+            userId: "",
+            text: "",
+          },
+          i: {
+            userId: "",
+            text: "",
+          },
+          j: {
+            userId: "",
+            text: "",
+          },
+          k: {
+            userId: "",
+            text: "",
+          },
+          l: {
+            userId: "",
+            text: "",
+          },
+          m: {
+            userId: "",
+            text: "",
+          },
+          n: {
+            userId: "",
+            text: "",
+          },
+        },
+        {
+          a: {
+            userId: "",
+            text: "",
+          },
+          b: {
+            userId: "",
+            text: "",
+          },
+          c: {
+            userId: "",
+            text: "",
+          },
+          d: {
+            userId: "",
+            text: "",
+          },
+          e: {
+            userId: "",
+            text: "",
+          },
+          f: {
+            userId: "",
+            text: "",
+          },
+          g: {
+            userId: "",
+            text: "",
+          },
+          h: {
+            userId: "",
+            text: "",
+          },
+          i: {
+            userId: "",
+            text: "",
+          },
+          j: {
+            userId: "",
+            text: "",
+          },
+          k: {
+            userId: "",
+            text: "",
+          },
+          l: {
+            userId: "",
+            text: "",
+          },
+          m: {
+            userId: "",
+            text: "",
+          },
+          n: {
+            userId: "",
+            text: "",
+          },
+        },
+      ];
+
 
   
 

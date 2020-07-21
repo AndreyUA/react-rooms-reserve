@@ -27,42 +27,6 @@ class WeekSheet extends Component {
     ],
   };
 
-  contentChangeHandler = ([day, number], e) => {
-    e.preventDefault();
-    let data = [...this.props.content];
-
-    const key = Object.keys(data[day])[number];
-
-    //no empty cells whit spaces
-    if (e.target.value.trim().length === 0) {
-      data[day][key].text = "";
-    } else {
-      data[day][key].text = e.target.value;
-    }
-
-    this.setState({
-      content: data,
-    });
-  };
-
-  contentChangeNextHandler = ([day, number], e) => {
-    e.preventDefault();
-    let dataNext = [...this.props.contentNext];
-
-    const keyNext = Object.keys(dataNext[day])[number];
-
-    //no empty cells whit spaces
-    if (e.target.value.trim().length === 0) {
-      dataNext[day][keyNext].text = "";
-    } else {
-      dataNext[day][keyNext].text = e.target.value;
-    }
-
-    this.setState({
-      contentNext: dataNext,
-    });
-  };
-
   componentDidMount() {
     const twoWeeksDates = getTwoWeeks(new Date());
     this.setState({
@@ -100,9 +64,10 @@ class WeekSheet extends Component {
                   day={this.state.days[index]}
                   times={this.state.times}
                   content={this.props.content}
-                  contentChangeHandler={this.contentChangeHandler}
+                  contentChangeHandler={this.props.changeHandlerFirstRoomCurrentWeek}
                   days={this.state.days}
                   dayNumber={index}
+                  focusHandler={this.props.focusHandler}
                 />
               );
             })}
@@ -116,9 +81,10 @@ class WeekSheet extends Component {
                   day={this.state.days[index]}
                   times={this.state.times}
                   content={this.props.contentNext}
-                  contentChangeHandler={this.contentChangeNextHandler}
+                  contentChangeHandler={this.props.changeHandlerFirstRoomNextWeek}
                   days={this.state.days}
                   dayNumber={index}
+                  focusHandler={this.props.focusHandler}
                 />
               );
             })}

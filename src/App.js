@@ -8,17 +8,39 @@ import ErrorPage from "./containers/ErrorPage/ErrorPage";
 
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
-import { lastElementFromDataBase } from "./funcs/funcs";
+import { lastElementFromDataBase, generateEmpryWeek } from "./funcs/funcs";
 import Loader from "./components/Loader/Loader";
 
 class App extends Component {
-  state = {
-    contentFirst: [],
-    contentNextFirst: [],
-    contentSecond: [],
-    contentNextSecond: [],
-    isLoading: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      contentFirst: [],
+      contentNextFirst: [],
+      contentSecond: [],
+      contentNextSecond: [],
+      isLoading: true,
+      isTyping: false,
+    };
+  }
+
+  async componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.isTyping !== prevState.isTyping) {
+      try {
+        await axios.post(
+          "https://react-rooms-reserve.firebaseio.com/first-room-this-week.json",
+          this.state.contentFirst
+        );
+
+        await axios.post(
+          "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json",
+          this.state.contentNextFirst
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 
   async componentDidMount() {
     const post = false;
@@ -27,7 +49,7 @@ class App extends Component {
       try {
         const response = await axios.post(
           "https://react-rooms-reserve.firebaseio.com/first-room-this-week.json",
-          this.state.contentFirst
+          generateEmpryWeek()
         );
 
         console.log(response);
@@ -38,7 +60,7 @@ class App extends Component {
       try {
         const response = await axios.post(
           "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json",
-          this.state.contentNextFirst
+          generateEmpryWeek()
         );
 
         console.log(response);
@@ -49,7 +71,7 @@ class App extends Component {
       try {
         const response = await axios.post(
           "https://react-rooms-reserve.firebaseio.com/second-room-this-week.json",
-          this.state.contentSecond
+          generateEmpryWeek()
         );
 
         console.log(response);
@@ -60,7 +82,7 @@ class App extends Component {
       try {
         const response = await axios.post(
           "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json",
-          this.state.contentNextSecond
+          generateEmpryWeek()
         );
 
         console.log(response);
@@ -91,24 +113,66 @@ class App extends Component {
         contentNextFirst: lastElementFromDataBase(responseFirstNext),
         contentSecond: lastElementFromDataBase(responseSecondThis),
         contentNextSecond: lastElementFromDataBase(responseSecondNext),
-        isLoading: false
+        isLoading: false,
       });
     } catch (error) {
       console.log(error);
     }
   }
 
-  //получилось связать базу данных и приложение.
-  //кривая сортировка часов!
-  //придумал сортировку - a, b, c, d, ...
-  //еще нужно связать введение с клавиатуры
+  changeHandlerFirstRoomCurrentWeek = ([day, number], e) => {
+    let data = [...this.state.contentFirst];
+
+    const key = Object.keys(data[day])[number];
+
+    //no empty cells whit spaces
+    if (e.target.value.trim().length === 0) {
+      data[day][key].text = "";
+    } else {
+      data[day][key].text = e.target.value;
+    }
+
+    this.setState({
+      contentFirst: data,
+    });
+  };
+
+  changeHandlerFirstRoomNextWeek = ([day, number], e) => {
+    let data = [...this.state.contentNextFirst];
+
+    const key = Object.keys(data[day])[number];
+
+    //no empty cells whit spaces
+    if (e.target.value.trim().length === 0) {
+      data[day][key].text = "";
+    } else {
+      data[day][key].text = e.target.value;
+    }
+
+    this.setState({
+      contentNextFirst: data,
+    });
+  };
+
+  focusHandler = () => {
+    this.setState({
+      isTyping: !this.state.isTyping,
+    });
+  };
+
+  ///осталось допилить второй зал. УРА, ЗАПИСЬ РАБОТАЕТ!!!
 
   render() {
     const week1 = (
       <WeekSheet
+        changeHandlerFirstRoomCurrentWeek={
+          this.changeHandlerFirstRoomCurrentWeek
+        }
+        changeHandlerFirstRoomNextWeek={this.changeHandlerFirstRoomNextWeek}
         content={this.state.contentFirst}
-        contentNext={this.state.contentNextFirst}
         number="1"
+        contentNext={this.state.contentNextFirst}
+        focusHandler={this.focusHandler}
       />
     );
 
@@ -124,8 +188,18 @@ class App extends Component {
       <Layout>
         <Switch>
           <Route path="/" exact component={Auth} />
-          <Route path="/room1" render={() => this.state.isLoading ? <Loader /> : week1} />
-          <Route path="/room2" render={() => this.state.isLoading ? <Loader /> : week2} />
+          <Route
+            path="/room1"
+            render={() => (this.state.isLoading ? <Loader /> : week1)}
+          />
+          {/*
+         
+         <Route
+            path="/room2"
+            render={() => (this.state.isLoading ? <Loader /> : week2)}
+          />
+         
+         */}
           <Route component={ErrorPage} />
         </Switch>
       </Layout>

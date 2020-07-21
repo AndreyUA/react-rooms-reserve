@@ -13,12 +13,13 @@ const Day = (props) => {
         {props.times.map((time, index) => {
           return (
             <Cell
+              contentChangeHandler={props.contentChangeHandler}
+              focusHandler={props.focusHandler}
               key={index}
               dayNumber={props.dayNumber}
               index={index}
               timePoint={time}
               content={props.content}
-              contentChangeHandler={props.contentChangeHandler}
               days={props.days}
             />
           );

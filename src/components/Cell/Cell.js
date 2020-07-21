@@ -13,13 +13,11 @@ const Cell = (props) => {
     >
       <p className="Day-body-cell-time">{props.timePoint}</p>
       <input
-        onChange={props.contentChangeHandler.bind(null, [
-          props.dayNumber,
-          props.index,
-        ])}
+        onChange={(e) => props.contentChangeHandler([props.dayNumber,props.index], e)}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === "Escape") {
             e.target.blur();
+            props.focusHandler();
           }
         }}
         className="Day-body-cell-content"

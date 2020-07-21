@@ -2,7 +2,7 @@ import React from "react";
 import "./Loader.css";
 
 const Loader = () => (
-  <div class="lds-default">
+  <div className="lds-default">
     <div />
     <div />
     <div />
