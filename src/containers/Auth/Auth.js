@@ -4,6 +4,7 @@ import "./Auth.css";
 import eye from "../../pics/eye.svg";
 import eye_off from "../../pics/eye_off.svg";
 import is from "is_js";
+import axios from "axios";
 
 class Auth extends Component {
   state = {
@@ -20,15 +21,49 @@ class Auth extends Component {
     },
   };
 
-  loginHandler = () => {};
+  loginHandler = async () => {
+    const authData = {
+      email: this.state.email.value,
+      password: this.state.password.value,
+      returnSecureToken: true,
+    };
 
-  registerHandler = () => {};
+    try {
+      const response = await axios.post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0",
+        authData
+      );
+
+      console.log(response);
+      this.props.loginHandler();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  registerHandler = async () => {
+    const authData = {
+      email: this.state.email.value,
+      password: this.state.password.value,
+      returnSecureToken: true,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0",
+        authData
+      );
+
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   submitHandler = (e) => {
     e.preventDefault();
-    console.log(
-      `login: ${this.state.email.value}, password: ${this.state.password.value}`
-    );
+    document.getElementById("Auth-email").value = "";
+    document.getElementById("Auth-pass").value = "";
   };
 
   emailChangeHandler = (e) => {

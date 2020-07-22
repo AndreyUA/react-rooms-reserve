@@ -1,9 +1,11 @@
-main {
-  align-items: center;
-}
-
 .ErrorPage {
+  position: relative;
   z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .ErrorPage-main {
@@ -29,7 +31,8 @@ main {
 
 .ErrorPage-face {
   position: absolute;
-  width: 540px;
+  margin-top: 100px;
+
   z-index: -1;
 
   animation: rotation 3s infinite ease-in-out;

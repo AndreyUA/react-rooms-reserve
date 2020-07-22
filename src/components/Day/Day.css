@@ -27,7 +27,7 @@
 .Day-body-cell-time {
   font-size: 16px;
   font-style: italic;
-  margin-left: 3px;
+  margin: 0 3px;
 }
 
 .Day-body-cell-content {
@@ -35,6 +35,7 @@
   width: 200px;
   border: none;
   text-align: center;
+  margin-right: 3px;
   font-size: 20px;
   font-weight: 700;
   background-color: #f3f0f0;
@@ -51,4 +52,8 @@
   position: absolute;
   width: 99%;
   height: 100%;
+}
+
+.Day-body-cell-full {
+  background: rgb(122, 121, 121);
 }

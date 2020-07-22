@@ -3,24 +3,31 @@ import React, { Component } from "react";
 import "./styles.css";
 import Layout from "./containers/Layout/Layout";
 import Auth from "./containers/Auth/Auth";
+import Home from "./containers/Home/Home";
 import WeekSheet from "./containers/WeekSheet/WeekSheet";
 import ErrorPage from "./containers/ErrorPage/ErrorPage";
 
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
-import { lastElementFromDataBase, generateEmpryWeek } from "./funcs/funcs";
-import Loader from "./components/Loader/Loader";
+import {
+  lastElementFromDataBase,
+  generateEmpryWeek,
+  getTwoWeeks,
+} from "./funcs/funcs";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dates: [],
+      datesNext: [],
       contentFirst: [],
       contentNextFirst: [],
       contentSecond: [],
       contentNextSecond: [],
       isLoading: true,
       isTyping: false,
+      isLoggedIn: false,
     };
   }
 
@@ -53,6 +60,24 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    const twoWeeksDates = getTwoWeeks(new Date());
+    this.setState({
+      dates: [
+        twoWeeksDates[0],
+        twoWeeksDates[1],
+        twoWeeksDates[2],
+        twoWeeksDates[3],
+        twoWeeksDates[4],
+      ],
+      datesNext: [
+        twoWeeksDates[5],
+        twoWeeksDates[6],
+        twoWeeksDates[7],
+        twoWeeksDates[8],
+        twoWeeksDates[9],
+      ],
+    });
+
     const post = false;
 
     //временная конструкция, удали потом обязательно
@@ -130,6 +155,12 @@ class App extends Component {
       console.log(error);
     }
   }
+
+  loginHandler = () => {
+    this.setState({
+      isLoggedIn: true,
+    });
+  };
 
   changeHandlerFirstRoomCurrentWeek = ([day, number], e) => {
     let data = [...this.state.contentFirst];
@@ -212,6 +243,8 @@ class App extends Component {
   };
 
   render() {
+    const auth = <Auth loginHandler={this.loginHandler} />;
+
     const week1 = (
       <WeekSheet
         changeHandlerFirstRoomCurrentWeek={
@@ -222,6 +255,8 @@ class App extends Component {
         number="1"
         contentNext={this.state.contentNextFirst}
         focusHandler={this.focusHandler}
+        dates={this.state.dates}
+        datesNext={this.state.datesNext}
       />
     );
 
@@ -235,22 +270,30 @@ class App extends Component {
         contentNext={this.state.contentNextSecond}
         number="2"
         focusHandler={this.focusHandler}
+        dates={this.state.dates}
+        datesNext={this.state.datesNext}
       />
     );
 
     return (
-      <Layout>
+      <Layout isLoggedIn={this.state.isLoggedIn}>
         <Switch>
-          <Route path="/" exact component={Auth} />
           <Route
-            path="/room1"
-            render={() => (this.state.isLoading ? <Loader /> : week1)}
+            path="/"
+            exact
+            render={() => (this.state.isLoggedIn ? <Home /> : auth)}
           />
+          {this.state.isLoggedIn ? (
+            <Route path="/room1" render={() => week1} />
+          ) : (
+            <Route component={ErrorPage} />
+          )}
 
-          <Route
-            path="/room2"
-            render={() => (this.state.isLoading ? <Loader /> : week2)}
-          />
+          {this.state.isLoggedIn ? (
+            <Route path="/room2" render={() => week2} />
+          ) : (
+            <Route component={ErrorPage} />
+          )}
           <Route component={ErrorPage} />
         </Switch>
       </Layout>
@@ -260,19 +303,9 @@ class App extends Component {
 
 export default App;
 
-//после реализации авторизации:
-//можно защитить роуты комнат
-//без авторизации будет страница 404
-
-//пример на всякий случай:
-//{this.state.isLoggedIn ? <Route path="/room1" render={() => week1} /> : <Route component={ErrorPage} />}
-//{this.state.isLoggedIn ? <Route path="/room2" render={() => week2} /> : <Route component={ErrorPage} />}
-
-
 //что нужно сделать:
-//красиво оформить загрузку: спиннер поставить в середину страницы или что-то такое
-//посмотреть страницу ошибки. снова съехала грустная рожа
-//можно уже делать авторизацию
 //программа максимум: реализовать переключение на следующую неделю
 
-//идея: сделать так, чтоб заполненная клетка имела другой цвет.
+//в будущем:
+//поработать с домашней страницей
+//добавить подтверждение регистрации по почте
