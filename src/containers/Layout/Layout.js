@@ -2,6 +2,7 @@ import React from "react";
 import "./Layout.css";
 
 import { NavLink } from "react-router-dom";
+import Alert from "../../components/Alert/Alert";
 
 const Layout = (props) => {
   return (
@@ -21,7 +22,10 @@ const Layout = (props) => {
           </li>
         </ul>
       </nav>
-      <main>{props.children}</main>
+      <main>
+        <Alert isAlert={props.isAlert} />
+        {props.children}
+        </main>
     </div>
   );
 };
