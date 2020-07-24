@@ -13,6 +13,7 @@ import {
   lastElementFromDataBase,
   generateEmpryWeek,
   getTwoWeeks,
+  getTodayDate,
 } from "./funcs/funcs";
 import is from "is_js";
 
@@ -170,103 +171,253 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const twoWeeksDates = getTwoWeeks(new Date());
-    this.setState({
-      dates: [
-        twoWeeksDates[0],
-        twoWeeksDates[1],
-        twoWeeksDates[2],
-        twoWeeksDates[3],
-        twoWeeksDates[4],
-      ],
-      datesNext: [
-        twoWeeksDates[5],
-        twoWeeksDates[6],
-        twoWeeksDates[7],
-        twoWeeksDates[8],
-        twoWeeksDates[9],
-      ],
-    });
+    //обработка смены дат
+    try {
+      //генерируем текущие даты
+      const twoWeeksDates = getTwoWeeks(new Date());
+      this.setState({
+        dates: [
+          twoWeeksDates[0],
+          twoWeeksDates[1],
+          twoWeeksDates[2],
+          twoWeeksDates[3],
+          twoWeeksDates[4],
+        ],
+        datesNext: [
+          twoWeeksDates[5],
+          twoWeeksDates[6],
+          twoWeeksDates[7],
+          twoWeeksDates[8],
+          twoWeeksDates[9],
+        ],
+      });
 
-    const post = false;
+      //получаем даты из БД
+      const response = await axios.get(
+        "https://react-rooms-reserve.firebaseio.com/two-weeks.json"
+      );
 
-    //временная конструкция, удали потом обязательно
-    if (post) {
-      try {
-        const response = await axios.post(
-          "https://react-rooms-reserve.firebaseio.com/first-room-this-week.json",
-          generateEmpryWeek()
-        );
+      //сравниваем сгенерированные даты и даты из БД
+      //это текущая неделя
+      if (twoWeeksDates[0] === lastElementFromDataBase(response)[0]) {
+        console.log("ok");
+        console.log(`today: ${getTodayDate(new Date())}`);
 
-        console.log(response);
-      } catch (error) {
-        console.log(error);
+        //получаем все записи из БД НАЧАЛО
+        //для текущей недели относительно БД
+        try {
+          const responseFirstThis = await axios.get(
+            "https://react-rooms-reserve.firebaseio.com/first-room-this-week.json"
+          );
+
+          const responseFirstNext = await axios.get(
+            "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json"
+          );
+
+          const responseSecondThis = await axios.get(
+            "https://react-rooms-reserve.firebaseio.com/second-room-this-week.json"
+          );
+
+          const responseSecondNext = await axios.get(
+            "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json"
+          );
+
+          this.setState({
+            contentFirst: lastElementFromDataBase(responseFirstThis),
+            contentNextFirst: lastElementFromDataBase(responseFirstNext),
+            contentSecond: lastElementFromDataBase(responseSecondThis),
+            contentNextSecond: lastElementFromDataBase(responseSecondNext),
+            isLoading: false,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+        //получаем все записи из БД КОНЕЦ
       }
 
-      try {
-        const response = await axios.post(
-          "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json",
-          generateEmpryWeek()
-        );
+      //это следующая неделя относительно БД
+      if (twoWeeksDates[0] === lastElementFromDataBase(response)[5]) {
+        //получаем все записи из БД НАЧАЛО
+        //для следующей недели относительно БД
+        try {
+          //получаем 2 следующие недели из БД и ставим их как текущие
+          const responseFirstNext = await axios.get(
+            "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json"
+          );
 
-        console.log(response);
-      } catch (error) {
-        console.log(error);
+          const responseSecondNext = await axios.get(
+            "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json"
+          );
+
+          //а теперь переписываем все в ДБ
+          //первая комната, текущая неделя
+          try {
+            const response = await axios.post(
+              "https://react-rooms-reserve.firebaseio.com/first-room-this-week.json",
+              lastElementFromDataBase(responseFirstNext)
+            );
+
+            console.log(response);
+          } catch (error) {
+            console.log(error);
+          }
+
+          //первая комната, следующая неделя
+          try {
+            const response = await axios.post(
+              "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json",
+              generateEmpryWeek()
+            );
+
+            console.log(response);
+          } catch (error) {
+            console.log(error);
+          }
+
+          //вторая комната, текущая неделя
+          try {
+            const response = await axios.post(
+              "https://react-rooms-reserve.firebaseio.com/second-room-this-week.json",
+              responseSecondNext
+            );
+
+            console.log(response);
+          } catch (error) {
+            console.log(error);
+          }
+
+          //вторая комната, следующая неделя
+          try {
+            const response = await axios.post(
+              "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json",
+              generateEmpryWeek()
+            );
+
+            console.log(response);
+          } catch (error) {
+            console.log(error);
+          }
+          //получаем все записи из БД КОНЕЦ
+
+          //генерируем две чистые недели
+          //и записываем их в состояние
+
+          //переписываем новые даты
+          await axios.post(
+            "https://react-rooms-reserve.firebaseio.com/two-weeks.json",
+            twoWeeksDates
+          );
+
+          this.setState({
+            contentFirst: lastElementFromDataBase(responseFirstNext),
+            contentNextFirst: generateEmpryWeek(),
+            contentSecond: lastElementFromDataBase(responseSecondNext),
+            contentNextSecond: generateEmpryWeek(),
+            isLoading: false,
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
 
-      try {
-        const response = await axios.post(
-          "https://react-rooms-reserve.firebaseio.com/second-room-this-week.json",
-          generateEmpryWeek()
+      //если приложение не активировалось более 2 недель:
+
+      if (
+        twoWeeksDates[0] !== lastElementFromDataBase(response)[0] &&
+        twoWeeksDates[0] !== lastElementFromDataBase(response)[5]
+      ) {
+        //генерируем все пустое
+        try {
+          const response = await axios.post(
+            "https://react-rooms-reserve.firebaseio.com/first-room-this-week.json",
+            generateEmpryWeek()
+          );
+
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+
+        try {
+          const response = await axios.post(
+            "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json",
+            generateEmpryWeek()
+          );
+
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+
+        try {
+          const response = await axios.post(
+            "https://react-rooms-reserve.firebaseio.com/second-room-this-week.json",
+            generateEmpryWeek()
+          );
+
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+
+        try {
+          const response = await axios.post(
+            "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json",
+            generateEmpryWeek()
+          );
+
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+
+        //переписываем новые даты
+        await axios.post(
+          "https://react-rooms-reserve.firebaseio.com/two-weeks.json",
+          twoWeeksDates
         );
 
-        console.log(response);
-      } catch (error) {
-        console.log(error);
+        //записываем пустые состояния
+        this.setState({
+          contentFirst: generateEmpryWeek(),
+          contentNextFirst: generateEmpryWeek(),
+          contentSecond: generateEmpryWeek(),
+          contentNextSecond: generateEmpryWeek(),
+          isLoading: false,
+        });
       }
-
-      try {
-        const response = await axios.post(
-          "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json",
-          generateEmpryWeek()
-        );
-
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
+    } catch (error) {
+      console.log(error);
     }
 
+    //удаляем лишние данные
+
     try {
-      const responseFirstThis = await axios.get(
-        "https://react-rooms-reserve.firebaseio.com/first-room-this-week.json"
+      const response = await axios.get(
+        "https://react-rooms-reserve.firebaseio.com/.json"
       );
 
-      const responseFirstNext = await axios.get(
-        "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json"
-      );
+      for (let i = 0; i < Object.keys(response.data).length; i++) {
+        const responseObj = await axios.get(
+          `https://react-rooms-reserve.firebaseio.com/${
+            Object.keys(response.data)[i]
+          }.json`
+        );
+        console.log(responseObj.data);
 
-      const responseSecondThis = await axios.get(
-        "https://react-rooms-reserve.firebaseio.com/second-room-this-week.json"
-      );
-
-      const responseSecondNext = await axios.get(
-        "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json"
-      );
-
-      this.setState({
-        contentFirst: lastElementFromDataBase(responseFirstThis),
-        contentNextFirst: lastElementFromDataBase(responseFirstNext),
-        contentSecond: lastElementFromDataBase(responseSecondThis),
-        contentNextSecond: lastElementFromDataBase(responseSecondNext),
-        isLoading: false,
-      });
+        for (let j = 0; j < Object.keys(responseObj.data).length - 1; j++) {
+          const resp = await axios.delete(
+            `https://react-rooms-reserve.firebaseio.com/${
+              Object.keys(response.data)[i]
+            }/${Object.keys(responseObj.data)[j]}.json`
+          );
+          console.log(resp);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
   }
-
-  //вот в следующие 4 обработчика нужно добавить условие. Если ID пользователя не совпадает - редактировать НЕЛЬЯ
 
   changeHandlerFirstRoomCurrentWeek = ([day, number], e) => {
     let data = [...this.state.contentFirst];
@@ -507,9 +658,11 @@ class App extends Component {
 
 export default App;
 
-//что нужно сделать:
-//программа максимум: реализовать переключение на следующую неделю
-
 //в будущем:
 //поработать с домашней страницей
 //добавить подтверждение регистрации по почте
+
+//нужна поработка запрета на редактирование
+//обычное удаление работает
+//баг на кнопке Backspace -- она очищает ИД пользователя и глюк в том, что ругается
+//это ТОЛЬКО на первой недели текущей

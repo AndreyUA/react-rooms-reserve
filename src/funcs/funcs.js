@@ -1,4 +1,7 @@
-export const getTwoWeeks = (dateNow) => {
+export const getTodayDate = dateNow =>
+  `${dateNow.getMonth() + 1}.${dateNow.getDate()}.${dateNow.getFullYear()}`;
+
+export const getTwoWeeks = dateNow => {
   let mondayThisWeek,
     tuesdayThisWeek,
     wednesdayThisWeek,
@@ -28,9 +31,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 1
       );
-      mondayThisWeek = `${
-        mondayDate.getMonth() + 1
-      }.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
+      mondayThisWeek = `${mondayDate.getMonth() +
+        1}.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
       //monday FINISH
 
       //tuesday START
@@ -39,9 +41,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 2
       );
-      tuesdayThisWeek = `${
-        tuesdayDate.getMonth() + 1
-      }.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
+      tuesdayThisWeek = `${tuesdayDate.getMonth() +
+        1}.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
       //tuesday FINISH
 
       //wednesday START
@@ -50,9 +51,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 3
       );
-      wednesdayThisWeek = `${
-        wednesdayDate.getMonth() + 1
-      }.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
+      wednesdayThisWeek = `${wednesdayDate.getMonth() +
+        1}.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
       //wednesday FINISH
 
       //thursday START
@@ -61,9 +61,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 4
       );
-      thursdayThisWeek = `${
-        thursdayDate.getMonth() + 1
-      }.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
+      thursdayThisWeek = `${thursdayDate.getMonth() +
+        1}.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
       //thursday FINISH
 
       //friday START
@@ -72,9 +71,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 5
       );
-      fridayThisWeek = `${
-        fridayDate.getMonth() + 1
-      }.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
+      fridayThisWeek = `${fridayDate.getMonth() +
+        1}.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
       //friday FINISH
 
       //next monday START
@@ -83,9 +81,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 8
       );
-      mondayNextWeek = `${
-        mondayNextDate.getMonth() + 1
-      }.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
+      mondayNextWeek = `${mondayNextDate.getMonth() +
+        1}.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
       //next monday FINISH
 
       //next tuesday START
@@ -94,9 +91,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 9
       );
-      tuesdayNextWeek = `${
-        tuesdayNextDate.getMonth() + 1
-      }.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
+      tuesdayNextWeek = `${tuesdayNextDate.getMonth() +
+        1}.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
       //next tuesday FINISH
 
       //next wednesday START
@@ -105,9 +101,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 10
       );
-      wednesdayNextWeek = `${
-        wednesdayNextDate.getMonth() + 1
-      }.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
+      wednesdayNextWeek = `${wednesdayNextDate.getMonth() +
+        1}.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
       //next wednesday FINISH
 
       //next thursday START
@@ -116,9 +111,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 11
       );
-      thursdayNextWeek = `${
-        thursdayNextDate.getMonth() + 1
-      }.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
+      thursdayNextWeek = `${thursdayNextDate.getMonth() +
+        1}.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
       //next thursday FINISH
 
       //next friday START
@@ -127,18 +121,16 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 12
       );
-      fridayNextWeek = `${
-        fridayNextDate.getMonth() + 1
-      }.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
+      fridayNextWeek = `${fridayNextDate.getMonth() +
+        1}.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
       //next friday FINISH
 
       break;
 
     case 1:
       //monday START
-      mondayThisWeek = `${
-        dateNow.getMonth() + 1
-      }.${dateNow.getDate()}.${dateNow.getFullYear()}`;
+      mondayThisWeek = `${dateNow.getMonth() +
+        1}.${dateNow.getDate()}.${dateNow.getFullYear()}`;
       //monday FINISH
 
       //tuesday START
@@ -147,9 +139,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 1
       );
-      tuesdayThisWeek = `${
-        tuesdayDate.getMonth() + 1
-      }.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
+      tuesdayThisWeek = `${tuesdayDate.getMonth() +
+        1}.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
       //tuesday FINISH
 
       //wednesday START
@@ -158,9 +149,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 2
       );
-      wednesdayThisWeek = `${
-        wednesdayDate.getMonth() + 1
-      }.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
+      wednesdayThisWeek = `${wednesdayDate.getMonth() +
+        1}.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
       //wednesday FINISH
 
       //thursday START
@@ -169,9 +159,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 3
       );
-      thursdayThisWeek = `${
-        thursdayDate.getMonth() + 1
-      }.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
+      thursdayThisWeek = `${thursdayDate.getMonth() +
+        1}.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
       //thursday FINISH
 
       //friday START
@@ -180,9 +169,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 4
       );
-      fridayThisWeek = `${
-        fridayDate.getMonth() + 1
-      }.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
+      fridayThisWeek = `${fridayDate.getMonth() +
+        1}.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
       //friday FINISH
 
       //next monday START
@@ -191,9 +179,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 7
       );
-      mondayNextWeek = `${
-        mondayNextDate.getMonth() + 1
-      }.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
+      mondayNextWeek = `${mondayNextDate.getMonth() +
+        1}.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
       //next monday FINISH
 
       //next tuesday START
@@ -202,9 +189,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 8
       );
-      tuesdayNextWeek = `${
-        tuesdayNextDate.getMonth() + 1
-      }.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
+      tuesdayNextWeek = `${tuesdayNextDate.getMonth() +
+        1}.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
       //next tuesday FINISH
 
       //next wednesday START
@@ -213,9 +199,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 9
       );
-      wednesdayNextWeek = `${
-        wednesdayNextDate.getMonth() + 1
-      }.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
+      wednesdayNextWeek = `${wednesdayNextDate.getMonth() +
+        1}.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
       //next wednesday FINISH
 
       //next thursday START
@@ -224,9 +209,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 10
       );
-      thursdayNextWeek = `${
-        thursdayNextDate.getMonth() + 1
-      }.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
+      thursdayNextWeek = `${thursdayNextDate.getMonth() +
+        1}.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
       //next thursday FINISH
 
       //next friday START
@@ -235,9 +219,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 11
       );
-      fridayNextWeek = `${
-        fridayNextDate.getMonth() + 1
-      }.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
+      fridayNextWeek = `${fridayNextDate.getMonth() +
+        1}.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
       //next friday FINISH
 
       break;
@@ -249,15 +232,13 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() - 1
       );
-      mondayThisWeek = `${
-        mondayDate.getMonth() + 1
-      }.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
+      mondayThisWeek = `${mondayDate.getMonth() +
+        1}.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
       //monday FINISH
 
       //tuesday START
-      tuesdayThisWeek = `${
-        dateNow.getMonth() + 1
-      }.${dateNow.getDate()}.${dateNow.getFullYear()}`;
+      tuesdayThisWeek = `${dateNow.getMonth() +
+        1}.${dateNow.getDate()}.${dateNow.getFullYear()}`;
       //tuesday FINISH
 
       //wednesday START
@@ -266,9 +247,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 1
       );
-      wednesdayThisWeek = `${
-        wednesdayDate.getMonth() + 1
-      }.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
+      wednesdayThisWeek = `${wednesdayDate.getMonth() +
+        1}.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
       //wednesday FINISH
 
       //thursday START
@@ -277,9 +257,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 2
       );
-      thursdayThisWeek = `${
-        thursdayDate.getMonth() + 1
-      }.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
+      thursdayThisWeek = `${thursdayDate.getMonth() +
+        1}.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
       //thursday FINISH
 
       //friday START
@@ -288,9 +267,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 3
       );
-      fridayThisWeek = `${
-        fridayDate.getMonth() + 1
-      }.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
+      fridayThisWeek = `${fridayDate.getMonth() +
+        1}.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
       //friday FINISH
 
       //next monday START
@@ -299,9 +277,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 6
       );
-      mondayNextWeek = `${
-        mondayNextDate.getMonth() + 1
-      }.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
+      mondayNextWeek = `${mondayNextDate.getMonth() +
+        1}.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
       //next monday FINISH
 
       //next tuesday START
@@ -310,9 +287,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 7
       );
-      tuesdayNextWeek = `${
-        tuesdayNextDate.getMonth() + 1
-      }.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
+      tuesdayNextWeek = `${tuesdayNextDate.getMonth() +
+        1}.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
       //next tuesday FINISH
 
       //next wednesday START
@@ -321,9 +297,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 8
       );
-      wednesdayNextWeek = `${
-        wednesdayNextDate.getMonth() + 1
-      }.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
+      wednesdayNextWeek = `${wednesdayNextDate.getMonth() +
+        1}.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
       //next wednesday FINISH
 
       //next thursday START
@@ -332,9 +307,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 9
       );
-      thursdayNextWeek = `${
-        thursdayNextDate.getMonth() + 1
-      }.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
+      thursdayNextWeek = `${thursdayNextDate.getMonth() +
+        1}.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
       //next thursday FINISH
 
       //next friday START
@@ -343,9 +317,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 10
       );
-      fridayNextWeek = `${
-        fridayNextDate.getMonth() + 1
-      }.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
+      fridayNextWeek = `${fridayNextDate.getMonth() +
+        1}.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
       //next friday FINISH
 
       break;
@@ -357,9 +330,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() - 2
       );
-      mondayThisWeek = `${
-        mondayDate.getMonth() + 1
-      }.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
+      mondayThisWeek = `${mondayDate.getMonth() +
+        1}.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
       //monday FINISH
 
       //tuesday START
@@ -368,15 +340,13 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() - 1
       );
-      tuesdayThisWeek = `${
-        tuesdayDate.getMonth() + 1
-      }.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
+      tuesdayThisWeek = `${tuesdayDate.getMonth() +
+        1}.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
       //tuesday FINISH
 
       //wednesday START
-      wednesdayThisWeek = `${
-        dateNow.getMonth() + 1
-      }.${dateNow.getDate()}.${dateNow.getFullYear()}`;
+      wednesdayThisWeek = `${dateNow.getMonth() +
+        1}.${dateNow.getDate()}.${dateNow.getFullYear()}`;
       //wednesday FINISH
 
       //thursday START
@@ -385,9 +355,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 1
       );
-      thursdayThisWeek = `${
-        thursdayDate.getMonth() + 1
-      }.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
+      thursdayThisWeek = `${thursdayDate.getMonth() +
+        1}.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
       //thursday FINISH
 
       //friday START
@@ -396,9 +365,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 2
       );
-      fridayThisWeek = `${
-        fridayDate.getMonth() + 1
-      }.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
+      fridayThisWeek = `${fridayDate.getMonth() +
+        1}.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
       //friday FINISH
 
       //next monday START
@@ -407,9 +375,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 5
       );
-      mondayNextWeek = `${
-        mondayNextDate.getMonth() + 1
-      }.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
+      mondayNextWeek = `${mondayNextDate.getMonth() +
+        1}.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
       //next monday FINISH
 
       //next tuesday START
@@ -418,9 +385,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 6
       );
-      tuesdayNextWeek = `${
-        tuesdayNextDate.getMonth() + 1
-      }.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
+      tuesdayNextWeek = `${tuesdayNextDate.getMonth() +
+        1}.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
       //next tuesday FINISH
 
       //next wednesday START
@@ -429,9 +395,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 7
       );
-      wednesdayNextWeek = `${
-        wednesdayNextDate.getMonth() + 1
-      }.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
+      wednesdayNextWeek = `${wednesdayNextDate.getMonth() +
+        1}.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
       //next wednesday FINISH
 
       //next thursday START
@@ -440,9 +405,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 8
       );
-      thursdayNextWeek = `${
-        thursdayNextDate.getMonth() + 1
-      }.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
+      thursdayNextWeek = `${thursdayNextDate.getMonth() +
+        1}.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
       //next thursday FINISH
 
       //next friday START
@@ -451,9 +415,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 9
       );
-      fridayNextWeek = `${
-        fridayNextDate.getMonth() + 1
-      }.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
+      fridayNextWeek = `${fridayNextDate.getMonth() +
+        1}.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
       //next friday FINISH
 
       break;
@@ -465,9 +428,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() - 3
       );
-      mondayThisWeek = `${
-        mondayDate.getMonth() + 1
-      }.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
+      mondayThisWeek = `${mondayDate.getMonth() +
+        1}.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
       //monday FINISH
 
       //tuesday START
@@ -476,9 +438,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() - 2
       );
-      tuesdayThisWeek = `${
-        tuesdayDate.getMonth() + 1
-      }.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
+      tuesdayThisWeek = `${tuesdayDate.getMonth() +
+        1}.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
       //tuesday FINISH
 
       //wednesday START
@@ -487,15 +448,13 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() - 1
       );
-      wednesdayThisWeek = `${
-        wednesdayDate.getMonth() + 1
-      }.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
+      wednesdayThisWeek = `${wednesdayDate.getMonth() +
+        1}.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
       //wednesday FINISH
 
       //thursday START
-      thursdayThisWeek = `${
-        dateNow.getMonth() + 1
-      }.${dateNow.getDate()}.${dateNow.getFullYear()}`;
+      thursdayThisWeek = `${dateNow.getMonth() +
+        1}.${dateNow.getDate()}.${dateNow.getFullYear()}`;
       //thursday FINISH
 
       //friday START
@@ -504,9 +463,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 1
       );
-      fridayThisWeek = `${
-        fridayDate.getMonth() + 1
-      }.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
+      fridayThisWeek = `${fridayDate.getMonth() +
+        1}.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
       //friday FINISH
 
       //next monday START
@@ -515,9 +473,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 4
       );
-      mondayNextWeek = `${
-        mondayNextDate.getMonth() + 1
-      }.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
+      mondayNextWeek = `${mondayNextDate.getMonth() +
+        1}.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
       //next monday FINISH
 
       //next tuesday START
@@ -526,9 +483,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 5
       );
-      tuesdayNextWeek = `${
-        tuesdayNextDate.getMonth() + 1
-      }.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
+      tuesdayNextWeek = `${tuesdayNextDate.getMonth() +
+        1}.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
       //next tuesday FINISH
 
       //next wednesday START
@@ -537,9 +493,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 6
       );
-      wednesdayNextWeek = `${
-        wednesdayNextDate.getMonth() + 1
-      }.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
+      wednesdayNextWeek = `${wednesdayNextDate.getMonth() +
+        1}.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
       //next wednesday FINISH
 
       //next thursday START
@@ -548,9 +503,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 7
       );
-      thursdayNextWeek = `${
-        thursdayNextDate.getMonth() + 1
-      }.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
+      thursdayNextWeek = `${thursdayNextDate.getMonth() +
+        1}.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
       //next thursday FINISH
 
       //next friday START
@@ -559,9 +513,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 8
       );
-      fridayNextWeek = `${
-        fridayNextDate.getMonth() + 1
-      }.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
+      fridayNextWeek = `${fridayNextDate.getMonth() +
+        1}.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
       //next friday FINISH
 
       break;
@@ -573,9 +526,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() - 4
       );
-      mondayThisWeek = `${
-        mondayDate.getMonth() + 1
-      }.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
+      mondayThisWeek = `${mondayDate.getMonth() +
+        1}.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
       //monday FINISH
 
       //tuesday START
@@ -584,9 +536,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() - 3
       );
-      tuesdayThisWeek = `${
-        tuesdayDate.getMonth() + 1
-      }.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
+      tuesdayThisWeek = `${tuesdayDate.getMonth() +
+        1}.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
       //tuesday FINISH
 
       //wednesday START
@@ -595,9 +546,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() - 2
       );
-      wednesdayThisWeek = `${
-        wednesdayDate.getMonth() + 1
-      }.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
+      wednesdayThisWeek = `${wednesdayDate.getMonth() +
+        1}.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
       //wednesday FINISH
 
       //thursday START
@@ -606,15 +556,13 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() - 1
       );
-      thursdayThisWeek = `${
-        thursdayDate.getMonth() + 1
-      }.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
+      thursdayThisWeek = `${thursdayDate.getMonth() +
+        1}.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
       //thursday FINISH
 
       //friday START
-      fridayThisWeek = `${
-        dateNow.getMonth() + 1
-      }.${dateNow.getDate()}.${dateNow.getFullYear()}`;
+      fridayThisWeek = `${dateNow.getMonth() +
+        1}.${dateNow.getDate()}.${dateNow.getFullYear()}`;
       //friday FINISH
 
       //next monday START
@@ -623,9 +571,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 3
       );
-      mondayNextWeek = `${
-        mondayNextDate.getMonth() + 1
-      }.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
+      mondayNextWeek = `${mondayNextDate.getMonth() +
+        1}.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
       //next monday FINISH
 
       //next tuesday START
@@ -634,9 +581,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 4
       );
-      tuesdayNextWeek = `${
-        tuesdayNextDate.getMonth() + 1
-      }.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
+      tuesdayNextWeek = `${tuesdayNextDate.getMonth() +
+        1}.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
       //next tuesday FINISH
 
       //next wednesday START
@@ -645,9 +591,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 5
       );
-      wednesdayNextWeek = `${
-        wednesdayNextDate.getMonth() + 1
-      }.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
+      wednesdayNextWeek = `${wednesdayNextDate.getMonth() +
+        1}.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
       //next wednesday FINISH
 
       //next thursday START
@@ -656,9 +601,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 6
       );
-      thursdayNextWeek = `${
-        thursdayNextDate.getMonth() + 1
-      }.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
+      thursdayNextWeek = `${thursdayNextDate.getMonth() +
+        1}.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
       //next thursday FINISH
 
       //next friday START
@@ -667,9 +611,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 7
       );
-      fridayNextWeek = `${
-        fridayNextDate.getMonth() + 1
-      }.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
+      fridayNextWeek = `${fridayNextDate.getMonth() +
+        1}.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
       //next friday FINISH
 
       break;
@@ -681,9 +624,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 2
       );
-      mondayThisWeek = `${
-        mondayDate.getMonth() + 1
-      }.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
+      mondayThisWeek = `${mondayDate.getMonth() +
+        1}.${mondayDate.getDate()}.${mondayDate.getFullYear()}`;
       //monday FINISH
 
       //tuesday START
@@ -692,9 +634,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 3
       );
-      tuesdayThisWeek = `${
-        tuesdayDate.getMonth() + 1
-      }.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
+      tuesdayThisWeek = `${tuesdayDate.getMonth() +
+        1}.${tuesdayDate.getDate()}.${tuesdayDate.getFullYear()}`;
       //tuesday FINISH
 
       //wednesday START
@@ -703,9 +644,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 4
       );
-      wednesdayThisWeek = `${
-        wednesdayDate.getMonth() + 1
-      }.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
+      wednesdayThisWeek = `${wednesdayDate.getMonth() +
+        1}.${wednesdayDate.getDate()}.${wednesdayDate.getFullYear()}`;
       //wednesday FINISH
 
       //thursday START
@@ -714,9 +654,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 5
       );
-      thursdayThisWeek = `${
-        thursdayDate.getMonth() + 1
-      }.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
+      thursdayThisWeek = `${thursdayDate.getMonth() +
+        1}.${thursdayDate.getDate()}.${thursdayDate.getFullYear()}`;
       //thursday FINISH
 
       //friday START
@@ -725,9 +664,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 6
       );
-      fridayThisWeek = `${
-        fridayDate.getMonth() + 1
-      }.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
+      fridayThisWeek = `${fridayDate.getMonth() +
+        1}.${fridayDate.getDate()}.${fridayDate.getFullYear()}`;
       //friday FINISH
 
       //next monday START
@@ -736,9 +674,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 9
       );
-      mondayNextWeek = `${
-        mondayNextDate.getMonth() + 1
-      }.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
+      mondayNextWeek = `${mondayNextDate.getMonth() +
+        1}.${mondayNextDate.getDate()}.${mondayNextDate.getFullYear()}`;
       //next monday FINISH
 
       //next tuesday START
@@ -747,9 +684,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 10
       );
-      tuesdayNextWeek = `${
-        tuesdayNextDate.getMonth() + 1
-      }.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
+      tuesdayNextWeek = `${tuesdayNextDate.getMonth() +
+        1}.${tuesdayNextDate.getDate()}.${tuesdayNextDate.getFullYear()}`;
       //next tuesday FINISH
 
       //next wednesday START
@@ -758,9 +694,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 11
       );
-      wednesdayNextWeek = `${
-        wednesdayNextDate.getMonth() + 1
-      }.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
+      wednesdayNextWeek = `${wednesdayNextDate.getMonth() +
+        1}.${wednesdayNextDate.getDate()}.${wednesdayNextDate.getFullYear()}`;
       //next wednesday FINISH
 
       //next thursday START
@@ -769,9 +704,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 12
       );
-      thursdayNextWeek = `${
-        thursdayNextDate.getMonth() + 1
-      }.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
+      thursdayNextWeek = `${thursdayNextDate.getMonth() +
+        1}.${thursdayNextDate.getDate()}.${thursdayNextDate.getFullYear()}`;
       //next thursday FINISH
 
       //next friday START
@@ -780,9 +714,8 @@ export const getTwoWeeks = (dateNow) => {
         dateNow.getMonth(),
         dateNow.getDate() + 13
       );
-      fridayNextWeek = `${
-        fridayNextDate.getMonth() + 1
-      }.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
+      fridayNextWeek = `${fridayNextDate.getMonth() +
+        1}.${fridayNextDate.getDate()}.${fridayNextDate.getFullYear()}`;
       //next friday FINISH
 
       break;
@@ -790,7 +723,7 @@ export const getTwoWeeks = (dateNow) => {
       break;
   }
 
-  //с поенедльника по пятницу выводит эту неделю + следующую
+  //с понедльника по пятницу выводит эту неделю + следующую
   //выходные не считаются
   // в субботу и воскресенье выводит следющую неделю + через одну
   //тоже без выходных
@@ -805,12 +738,12 @@ export const getTwoWeeks = (dateNow) => {
     tuesdayNextWeek,
     wednesdayNextWeek,
     thursdayNextWeek,
-    fridayNextWeek,
+    fridayNextWeek
   ];
 };
 
 //функция определения последнего элемента из FireBase
-export const lastElementFromDataBase = (obj) =>
+export const lastElementFromDataBase = obj =>
   obj.data[Object.keys(obj.data)[Object.keys(obj.data).length - 1]];
 
 //функция генерации пустой недели
@@ -819,293 +752,293 @@ export const generateEmpryWeek = () => [
   {
     a: {
       userId: "",
-      text: "",
+      text: ""
     },
     b: {
       userId: "",
-      text: "",
+      text: ""
     },
     c: {
       userId: "",
-      text: "",
+      text: ""
     },
     d: {
       userId: "",
-      text: "",
+      text: ""
     },
     e: {
       userId: "",
-      text: "",
+      text: ""
     },
     f: {
       userId: "",
-      text: "",
+      text: ""
     },
     g: {
       userId: "",
-      text: "",
+      text: ""
     },
     h: {
       userId: "",
-      text: "",
+      text: ""
     },
     i: {
       userId: "",
-      text: "",
+      text: ""
     },
     j: {
       userId: "",
-      text: "",
+      text: ""
     },
     k: {
       userId: "",
-      text: "",
+      text: ""
     },
     l: {
       userId: "",
-      text: "",
+      text: ""
     },
     m: {
       userId: "",
-      text: "",
+      text: ""
     },
     n: {
       userId: "",
-      text: "",
-    },
+      text: ""
+    }
   },
   {
     a: {
       userId: "",
-      text: "",
+      text: ""
     },
     b: {
       userId: "",
-      text: "",
+      text: ""
     },
     c: {
       userId: "",
-      text: "",
+      text: ""
     },
     d: {
       userId: "",
-      text: "",
+      text: ""
     },
     e: {
       userId: "",
-      text: "",
+      text: ""
     },
     f: {
       userId: "",
-      text: "",
+      text: ""
     },
     g: {
       userId: "",
-      text: "",
+      text: ""
     },
     h: {
       userId: "",
-      text: "",
+      text: ""
     },
     i: {
       userId: "",
-      text: "",
+      text: ""
     },
     j: {
       userId: "",
-      text: "",
+      text: ""
     },
     k: {
       userId: "",
-      text: "",
+      text: ""
     },
     l: {
       userId: "",
-      text: "",
+      text: ""
     },
     m: {
       userId: "",
-      text: "",
+      text: ""
     },
     n: {
       userId: "",
-      text: "",
-    },
+      text: ""
+    }
   },
   {
     a: {
       userId: "",
-      text: "",
+      text: ""
     },
     b: {
       userId: "",
-      text: "",
+      text: ""
     },
     c: {
       userId: "",
-      text: "",
+      text: ""
     },
     d: {
       userId: "",
-      text: "",
+      text: ""
     },
     e: {
       userId: "",
-      text: "",
+      text: ""
     },
     f: {
       userId: "",
-      text: "",
+      text: ""
     },
     g: {
       userId: "",
-      text: "",
+      text: ""
     },
     h: {
       userId: "",
-      text: "",
+      text: ""
     },
     i: {
       userId: "",
-      text: "",
+      text: ""
     },
     j: {
       userId: "",
-      text: "",
+      text: ""
     },
     k: {
       userId: "",
-      text: "",
+      text: ""
     },
     l: {
       userId: "",
-      text: "",
+      text: ""
     },
     m: {
       userId: "",
-      text: "",
+      text: ""
     },
     n: {
       userId: "",
-      text: "",
-    },
+      text: ""
+    }
   },
   {
     a: {
       userId: "",
-      text: "",
+      text: ""
     },
     b: {
       userId: "",
-      text: "",
+      text: ""
     },
     c: {
       userId: "",
-      text: "",
+      text: ""
     },
     d: {
       userId: "",
-      text: "",
+      text: ""
     },
     e: {
       userId: "",
-      text: "",
+      text: ""
     },
     f: {
       userId: "",
-      text: "",
+      text: ""
     },
     g: {
       userId: "",
-      text: "",
+      text: ""
     },
     h: {
       userId: "",
-      text: "",
+      text: ""
     },
     i: {
       userId: "",
-      text: "",
+      text: ""
     },
     j: {
       userId: "",
-      text: "",
+      text: ""
     },
     k: {
       userId: "",
-      text: "",
+      text: ""
     },
     l: {
       userId: "",
-      text: "",
+      text: ""
     },
     m: {
       userId: "",
-      text: "",
+      text: ""
     },
     n: {
       userId: "",
-      text: "",
-    },
+      text: ""
+    }
   },
   {
     a: {
       userId: "",
-      text: "",
+      text: ""
     },
     b: {
       userId: "",
-      text: "",
+      text: ""
     },
     c: {
       userId: "",
-      text: "",
+      text: ""
     },
     d: {
       userId: "",
-      text: "",
+      text: ""
     },
     e: {
       userId: "",
-      text: "",
+      text: ""
     },
     f: {
       userId: "",
-      text: "",
+      text: ""
     },
     g: {
       userId: "",
-      text: "",
+      text: ""
     },
     h: {
       userId: "",
-      text: "",
+      text: ""
     },
     i: {
       userId: "",
-      text: "",
+      text: ""
     },
     j: {
       userId: "",
-      text: "",
+      text: ""
     },
     k: {
       userId: "",
-      text: "",
+      text: ""
     },
     l: {
       userId: "",
-      text: "",
+      text: ""
     },
     m: {
       userId: "",
-      text: "",
+      text: ""
     },
     n: {
       userId: "",
-      text: "",
-    },
-  },
+      text: ""
+    }
+  }
 ];
 
 /*
