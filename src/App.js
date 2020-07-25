@@ -278,7 +278,7 @@ class App extends Component {
           try {
             const response = await axios.post(
               "https://react-rooms-reserve.firebaseio.com/second-room-this-week.json",
-              responseSecondNext
+              lastElementFromDataBase(responseSecondNext)
             );
 
             console.log(response);
@@ -403,15 +403,13 @@ class App extends Component {
             Object.keys(response.data)[i]
           }.json`
         );
-        console.log(responseObj.data);
 
         for (let j = 0; j < Object.keys(responseObj.data).length - 1; j++) {
-          const resp = await axios.delete(
+          await axios.delete(
             `https://react-rooms-reserve.firebaseio.com/${
               Object.keys(response.data)[i]
             }/${Object.keys(responseObj.data)[j]}.json`
           );
-          console.log(resp);
         }
       }
     } catch (error) {
@@ -432,7 +430,6 @@ class App extends Component {
       //no empty cells whit spaces
       if (e.target.value.trim().length === 0) {
         data[day][key].text = "";
-        data[day][key].userId = "";
       } else {
         data[day][key].text = e.target.value;
         data[day][key].userId = this.state.userId;
@@ -662,7 +659,5 @@ export default App;
 //поработать с домашней страницей
 //добавить подтверждение регистрации по почте
 
-//нужна поработка запрета на редактирование
-//обычное удаление работает
-//баг на кнопке Backspace -- она очищает ИД пользователя и глюк в том, что ругается
-//это ТОЛЬКО на первой недели текущей
+//также разобраться в userId
+//бывает что остается и запрещает редактировать другому пользователю
