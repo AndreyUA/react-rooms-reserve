@@ -1,0 +1,19 @@
+.Home {
+  margin: 100px 0 0 0;
+  text-align: center;
+}
+
+.Home h1 {
+  margin: 30px 0;
+  font-size: 80px;
+}
+
+.Home h2 {
+  margin: 20px 0;
+  font-size: 50px;
+}
+
+.Home h3 {
+  margin: 10px 0;
+  font-size: 35px;
+}

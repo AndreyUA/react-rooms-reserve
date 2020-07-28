@@ -13,7 +13,7 @@ import {
   lastElementFromDataBase,
   generateEmpryWeek,
   getTwoWeeks,
-  getTodayDate,
+  getTodayDate
 } from "./funcs/funcs";
 import is from "is_js";
 
@@ -36,13 +36,13 @@ class App extends Component {
       isAlert: false,
       email: {
         value: "your email",
-        errorMessage: "Enter correct email",
+        errorMessage: "Enter correct email"
       },
       password: {
         value: "your password",
         errorMessage: "Enter correct password",
-        show: false,
-      },
+        show: false
+      }
     };
   }
 
@@ -50,7 +50,7 @@ class App extends Component {
     const authData = {
       email: this.state.email.value,
       password: this.state.password.value,
-      returnSecureToken: true,
+      returnSecureToken: true
     };
 
     try {
@@ -60,7 +60,7 @@ class App extends Component {
       );
       this.setState({
         isLoggedIn: true,
-        userId: response.data.localId,
+        userId: response.data.localId
       });
     } catch (error) {
       console.log(error);
@@ -71,7 +71,7 @@ class App extends Component {
     const authData = {
       email: this.state.email.value,
       password: this.state.password.value,
-      returnSecureToken: true,
+      returnSecureToken: true
     };
 
     try {
@@ -86,13 +86,13 @@ class App extends Component {
     }
   };
 
-  submitHandler = (e) => {
+  submitHandler = e => {
     e.preventDefault();
     document.getElementById("Auth-email").value = "";
     document.getElementById("Auth-pass").value = "";
   };
 
-  emailChangeHandler = (e) => {
+  emailChangeHandler = e => {
     const value = e.target.value;
     const email = { ...this.state.email };
 
@@ -108,11 +108,11 @@ class App extends Component {
 
     this.setState({
       isEmailValid: isValid,
-      email,
+      email
     });
   };
 
-  passwordChangeHandler = (e) => {
+  passwordChangeHandler = e => {
     const value = e.target.value;
     const password = { ...this.state.password };
 
@@ -128,17 +128,17 @@ class App extends Component {
 
     this.setState({
       isPasswordValid: isValid,
-      password,
+      password
     });
   };
 
-  showPasswordHandler = (e) => {
+  showPasswordHandler = e => {
     e.preventDefault();
     const password = { ...this.state.password };
 
     password.show = !this.state.password.show;
     this.setState({
-      password,
+      password
     });
   };
 
@@ -181,15 +181,15 @@ class App extends Component {
           twoWeeksDates[1],
           twoWeeksDates[2],
           twoWeeksDates[3],
-          twoWeeksDates[4],
+          twoWeeksDates[4]
         ],
         datesNext: [
           twoWeeksDates[5],
           twoWeeksDates[6],
           twoWeeksDates[7],
           twoWeeksDates[8],
-          twoWeeksDates[9],
-        ],
+          twoWeeksDates[9]
+        ]
       });
 
       //получаем даты из БД
@@ -227,7 +227,7 @@ class App extends Component {
             contentNextFirst: lastElementFromDataBase(responseFirstNext),
             contentSecond: lastElementFromDataBase(responseSecondThis),
             contentNextSecond: lastElementFromDataBase(responseSecondNext),
-            isLoading: false,
+            isLoading: false
           });
         } catch (error) {
           console.log(error);
@@ -313,7 +313,7 @@ class App extends Component {
             contentNextFirst: generateEmpryWeek(),
             contentSecond: lastElementFromDataBase(responseSecondNext),
             contentNextSecond: generateEmpryWeek(),
-            isLoading: false,
+            isLoading: false
           });
         } catch (error) {
           console.log(error);
@@ -383,7 +383,7 @@ class App extends Component {
           contentNextFirst: generateEmpryWeek(),
           contentSecond: generateEmpryWeek(),
           contentNextSecond: generateEmpryWeek(),
-          isLoading: false,
+          isLoading: false
         });
       }
     } catch (error) {
@@ -417,167 +417,179 @@ class App extends Component {
     }
   }
 
+  //обработчик события для первой комнаты и текущей недели
   changeHandlerFirstRoomCurrentWeek = ([day, number], e) => {
     let data = [...this.state.contentFirst];
 
     const key = Object.keys(data[day])[number];
 
     if (
+      data[day][key].userId !== this.state.userId &&
+      data[day][key].text !== ""
+    ) {
+      console.log("FAILED");
+      e.target.blur();
+      this.setState({
+        isAlert: true
+      });
+      setTimeout(() => {
+        this.setState({
+          isAlert: false
+        });
+      }, 2000);
+      return;
+    } else if (
       data[day][key].userId === this.state.userId ||
       data[day][key].userId === "" ||
-      e.target.value === ""
+      data[day][key].text === ""
     ) {
       //no empty cells whit spaces
       if (e.target.value.trim().length === 0) {
         data[day][key].text = "";
+        data[day][key].userId = "";
       } else {
         data[day][key].text = e.target.value;
         data[day][key].userId = this.state.userId;
       }
-    }
 
-    if (data[day][key].userId !== this.state.userId) {
-      console.log("FAILED");
-      e.target.blur();
       this.setState({
-        isAlert: true,
+        contentFirst: data
       });
-      setTimeout(() => {
-        this.setState({
-          isAlert: false,
-        });
-      }, 2000);
-      return;
     }
-
-    this.setState({
-      contentFirst: data,
-    });
   };
 
+  //обработчик события для первой комнаты и следующей недели
   changeHandlerFirstRoomNextWeek = ([day, number], e) => {
     let data = [...this.state.contentNextFirst];
 
     const key = Object.keys(data[day])[number];
 
     if (
+      data[day][key].userId !== this.state.userId &&
+      data[day][key].text !== ""
+    ) {
+      console.log("FAILED");
+      e.target.blur();
+      this.setState({
+        isAlert: true
+      });
+      setTimeout(() => {
+        this.setState({
+          isAlert: false
+        });
+      }, 2000);
+      return;
+    } else if (
       data[day][key].userId === this.state.userId ||
       data[day][key].userId === "" ||
-      e.target.value === ""
+      data[day][key].text === ""
     ) {
       //no empty cells whit spaces
       if (e.target.value.trim().length === 0) {
         data[day][key].text = "";
+        data[day][key].userId = "";
       } else {
         data[day][key].text = e.target.value;
         data[day][key].userId = this.state.userId;
       }
-    }
 
-    if (data[day][key].userId !== this.state.userId) {
-      console.log("FAILED");
-      e.target.blur();
       this.setState({
-        isAlert: true,
+        contentNextFirst: data
       });
-      setTimeout(() => {
-        this.setState({
-          isAlert: false,
-        });
-      }, 2000);
-      return;
     }
-
-    this.setState({
-      contentNextFirst: data,
-    });
   };
 
+  //обработчик события для второй комнаты и текущей недели
   changeHandlerSecondRoomCurrentWeek = ([day, number], e) => {
     let data = [...this.state.contentSecond];
 
     const key = Object.keys(data[day])[number];
 
     if (
+      data[day][key].userId !== this.state.userId &&
+      data[day][key].text !== ""
+    ) {
+      console.log("FAILED");
+      e.target.blur();
+      this.setState({
+        isAlert: true
+      });
+      setTimeout(() => {
+        this.setState({
+          isAlert: false
+        });
+      }, 2000);
+      return;
+    } else if (
       data[day][key].userId === this.state.userId ||
       data[day][key].userId === "" ||
-      e.target.value === ""
+      data[day][key].text === ""
     ) {
       //no empty cells whit spaces
       if (e.target.value.trim().length === 0) {
         data[day][key].text = "";
+        data[day][key].userId = "";
       } else {
         data[day][key].text = e.target.value;
         data[day][key].userId = this.state.userId;
       }
-    }
 
-    if (data[day][key].userId !== this.state.userId) {
-      console.log("FAILED");
-      e.target.blur();
       this.setState({
-        isAlert: true,
+        contentSecond: data
       });
-      setTimeout(() => {
-        this.setState({
-          isAlert: false,
-        });
-      }, 2000);
-      return;
     }
-
-    this.setState({
-      contentSecond: data,
-    });
   };
 
+  //обработчик события для второй комнаты и следующей недели
   changeHandlerSecondRoomNextWeek = ([day, number], e) => {
     let data = [...this.state.contentNextSecond];
 
     const key = Object.keys(data[day])[number];
 
     if (
+      data[day][key].userId !== this.state.userId &&
+      data[day][key].text !== ""
+    ) {
+      console.log("FAILED");
+      e.target.blur();
+      this.setState({
+        isAlert: true
+      });
+      setTimeout(() => {
+        this.setState({
+          isAlert: false
+        });
+      }, 2000);
+      return;
+    } else if (
       data[day][key].userId === this.state.userId ||
       data[day][key].userId === "" ||
-      e.target.value === ""
+      data[day][key].text === ""
     ) {
       //no empty cells whit spaces
       if (e.target.value.trim().length === 0) {
         data[day][key].text = "";
+        data[day][key].userId = "";
       } else {
         data[day][key].text = e.target.value;
         data[day][key].userId = this.state.userId;
       }
-    }
 
-    if (data[day][key].userId !== this.state.userId) {
-      console.log("FAILED");
-      e.target.blur();
       this.setState({
-        isAlert: true,
+        contentNextSecond: data
       });
-      setTimeout(() => {
-        this.setState({
-          isAlert: false,
-        });
-      }, 2000);
-      return;
     }
-
-    this.setState({
-      contentNextSecond: data,
-    });
   };
 
   focusHandler = () => {
     this.setState({
-      isTyping: !this.state.isTyping,
+      isTyping: !this.state.isTyping
     });
   };
 
   showAlertWindow = () => {
     this.setState({
-      isAlert: !this.state.isAlert,
+      isAlert: !this.state.isAlert
     });
   };
 
@@ -627,13 +639,24 @@ class App extends Component {
       />
     );
 
+    const home = (
+      <Home
+        contentFirst={this.state.contentFirst}
+        contentNextFirst={this.state.contentNextFirst}
+        contentSecond={this.state.contentSecond}
+        contentNextSecond={this.state.contentNextSecond}
+        email={this.state.email}
+        userId={this.state.userId}
+      />
+    );
+
     return (
       <Layout isLoggedIn={this.state.isLoggedIn} isAlert={this.state.isAlert}>
         <Switch>
           <Route
             path="/"
             exact
-            render={() => (this.state.isLoggedIn ? <Home /> : auth)}
+            render={() => (this.state.isLoggedIn ? home : auth)}
           />
           {this.state.isLoggedIn ? (
             <Route path="/room1" render={() => week1} />

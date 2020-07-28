@@ -37,7 +37,11 @@ const Cell = (props) => {
             e.target
               .closest(".Day-body-cell")
               .classList.add("Day-body-cell-full");
-          } else {
+          } else if (
+            props.content[props.dayNumber][
+              Object.keys(props.content[props.dayNumber])[props.index]
+            ].text === ""
+          ) {
             e.target
               .closest(".Day-body-cell")
               .classList.remove("Day-body-cell-full");
