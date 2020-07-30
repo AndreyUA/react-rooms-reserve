@@ -12,7 +12,7 @@ class Home extends Component {
         //тут добавить проверку на юзерИд
         //соответствует - можно выводить
         //и продумать шутку со временем
-        console.log(this.props.contentFirst[i][j]);
+        // console.log(this.props.contentFirst[i][j]);
       }
     }
   };

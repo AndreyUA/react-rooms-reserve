@@ -1,0 +1,2 @@
+export const SET_CURRENT_WEEK = "SET_CURRENT_WEEK";
+export const SET_NEXT_WEEK = "SET_NEXT_WEEK";

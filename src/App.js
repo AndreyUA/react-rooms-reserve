@@ -13,16 +13,18 @@ import {
   lastElementFromDataBase,
   generateEmpryWeek,
   getTwoWeeks,
-  getTodayDate
+  getTodayDate,
 } from "./funcs/funcs";
 import is from "is_js";
+
+//redux
+import { connect } from "react-redux";
+import { calculateDates, calculateNextDates } from "./store/actions/app";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dates: [],
-      datesNext: [],
       contentFirst: [],
       contentNextFirst: [],
       contentSecond: [],
@@ -36,13 +38,13 @@ class App extends Component {
       isAlert: false,
       email: {
         value: "your email",
-        errorMessage: "Enter correct email"
+        errorMessage: "Enter correct email",
       },
       password: {
         value: "your password",
         errorMessage: "Enter correct password",
-        show: false
-      }
+        show: false,
+      },
     };
   }
 
@@ -50,7 +52,7 @@ class App extends Component {
     const authData = {
       email: this.state.email.value,
       password: this.state.password.value,
-      returnSecureToken: true
+      returnSecureToken: true,
     };
 
     try {
@@ -60,8 +62,9 @@ class App extends Component {
       );
       this.setState({
         isLoggedIn: true,
-        userId: response.data.localId
+        userId: response.data.localId,
       });
+      console.log(this.props.userId);
     } catch (error) {
       console.log(error);
     }
@@ -71,7 +74,7 @@ class App extends Component {
     const authData = {
       email: this.state.email.value,
       password: this.state.password.value,
-      returnSecureToken: true
+      returnSecureToken: true,
     };
 
     try {
@@ -86,13 +89,13 @@ class App extends Component {
     }
   };
 
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
     document.getElementById("Auth-email").value = "";
     document.getElementById("Auth-pass").value = "";
   };
 
-  emailChangeHandler = e => {
+  emailChangeHandler = (e) => {
     const value = e.target.value;
     const email = { ...this.state.email };
 
@@ -108,11 +111,11 @@ class App extends Component {
 
     this.setState({
       isEmailValid: isValid,
-      email
+      email,
     });
   };
 
-  passwordChangeHandler = e => {
+  passwordChangeHandler = (e) => {
     const value = e.target.value;
     const password = { ...this.state.password };
 
@@ -128,17 +131,17 @@ class App extends Component {
 
     this.setState({
       isPasswordValid: isValid,
-      password
+      password,
     });
   };
 
-  showPasswordHandler = e => {
+  showPasswordHandler = (e) => {
     e.preventDefault();
     const password = { ...this.state.password };
 
     password.show = !this.state.password.show;
     this.setState({
-      password
+      password,
     });
   };
 
@@ -175,22 +178,24 @@ class App extends Component {
     try {
       //генерируем текущие даты
       const twoWeeksDates = getTwoWeeks(new Date());
-      this.setState({
-        dates: [
-          twoWeeksDates[0],
-          twoWeeksDates[1],
-          twoWeeksDates[2],
-          twoWeeksDates[3],
-          twoWeeksDates[4]
-        ],
-        datesNext: [
-          twoWeeksDates[5],
-          twoWeeksDates[6],
-          twoWeeksDates[7],
-          twoWeeksDates[8],
-          twoWeeksDates[9]
-        ]
-      });
+
+      this.props.calculateDates([
+        twoWeeksDates[0],
+        twoWeeksDates[1],
+        twoWeeksDates[2],
+        twoWeeksDates[3],
+        twoWeeksDates[4],
+      ]);
+
+      this.props.calculateNextDates([
+        twoWeeksDates[5],
+        twoWeeksDates[6],
+        twoWeeksDates[7],
+        twoWeeksDates[8],
+        twoWeeksDates[9],
+      ]);
+
+      console.log(this.props);
 
       //получаем даты из БД
       const response = await axios.get(
@@ -227,7 +232,7 @@ class App extends Component {
             contentNextFirst: lastElementFromDataBase(responseFirstNext),
             contentSecond: lastElementFromDataBase(responseSecondThis),
             contentNextSecond: lastElementFromDataBase(responseSecondNext),
-            isLoading: false
+            isLoading: false,
           });
         } catch (error) {
           console.log(error);
@@ -313,7 +318,7 @@ class App extends Component {
             contentNextFirst: generateEmpryWeek(),
             contentSecond: lastElementFromDataBase(responseSecondNext),
             contentNextSecond: generateEmpryWeek(),
-            isLoading: false
+            isLoading: false,
           });
         } catch (error) {
           console.log(error);
@@ -383,7 +388,7 @@ class App extends Component {
           contentNextFirst: generateEmpryWeek(),
           contentSecond: generateEmpryWeek(),
           contentNextSecond: generateEmpryWeek(),
-          isLoading: false
+          isLoading: false,
         });
       }
     } catch (error) {
@@ -430,11 +435,11 @@ class App extends Component {
       console.log("FAILED");
       e.target.blur();
       this.setState({
-        isAlert: true
+        isAlert: true,
       });
       setTimeout(() => {
         this.setState({
-          isAlert: false
+          isAlert: false,
         });
       }, 2000);
       return;
@@ -453,7 +458,7 @@ class App extends Component {
       }
 
       this.setState({
-        contentFirst: data
+        contentFirst: data,
       });
     }
   };
@@ -471,11 +476,11 @@ class App extends Component {
       console.log("FAILED");
       e.target.blur();
       this.setState({
-        isAlert: true
+        isAlert: true,
       });
       setTimeout(() => {
         this.setState({
-          isAlert: false
+          isAlert: false,
         });
       }, 2000);
       return;
@@ -494,7 +499,7 @@ class App extends Component {
       }
 
       this.setState({
-        contentNextFirst: data
+        contentNextFirst: data,
       });
     }
   };
@@ -512,11 +517,11 @@ class App extends Component {
       console.log("FAILED");
       e.target.blur();
       this.setState({
-        isAlert: true
+        isAlert: true,
       });
       setTimeout(() => {
         this.setState({
-          isAlert: false
+          isAlert: false,
         });
       }, 2000);
       return;
@@ -535,7 +540,7 @@ class App extends Component {
       }
 
       this.setState({
-        contentSecond: data
+        contentSecond: data,
       });
     }
   };
@@ -553,11 +558,11 @@ class App extends Component {
       console.log("FAILED");
       e.target.blur();
       this.setState({
-        isAlert: true
+        isAlert: true,
       });
       setTimeout(() => {
         this.setState({
-          isAlert: false
+          isAlert: false,
         });
       }, 2000);
       return;
@@ -576,20 +581,20 @@ class App extends Component {
       }
 
       this.setState({
-        contentNextSecond: data
+        contentNextSecond: data,
       });
     }
   };
 
   focusHandler = () => {
     this.setState({
-      isTyping: !this.state.isTyping
+      isTyping: !this.state.isTyping,
     });
   };
 
   showAlertWindow = () => {
     this.setState({
-      isAlert: !this.state.isAlert
+      isAlert: !this.state.isAlert,
     });
   };
 
@@ -619,8 +624,8 @@ class App extends Component {
         number="1"
         contentNext={this.state.contentNextFirst}
         focusHandler={this.focusHandler}
-        dates={this.state.dates}
-        datesNext={this.state.datesNext}
+        dates={this.props.dates}
+        datesNext={this.props.datesNext}
       />
     );
 
@@ -634,8 +639,8 @@ class App extends Component {
         contentNext={this.state.contentNextSecond}
         number="2"
         focusHandler={this.focusHandler}
-        dates={this.state.dates}
-        datesNext={this.state.datesNext}
+        dates={this.props.dates}
+        datesNext={this.props.datesNext}
       />
     );
 
@@ -676,7 +681,21 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    dates: state.app.dates,
+    datesNext: state.app.datesNext,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    calculateDates: (array) => dispatch(calculateDates(array)),
+    calculateNextDates: (array) => dispatch(calculateNextDates(array)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 //в будущем:
 //поработать с домашней страницей
