@@ -14,24 +14,28 @@ import {
   generateEmpryWeek,
   getTwoWeeks,
   getTodayDate,
+  deletePrevStatesFromDB,
 } from "./funcs/funcs";
 import is from "is_js";
 
 //redux
 import { connect } from "react-redux";
-import { calculateDates, calculateNextDates } from "./store/actions/app";
+import {
+  calculateDates,
+  calculateNextDates,
+  loggedIn,
+  getContentFirst,
+  getContentNextFirst,
+  getContentSecond,
+  getContentNextSecond,
+} from "./store/actions/app";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contentFirst: [],
-      contentNextFirst: [],
-      contentSecond: [],
-      contentNextSecond: [],
       isLoading: true,
       isTyping: false,
-      isLoggedIn: false,
       userId: "",
       isEmailValid: true,
       isPasswordValid: true,
@@ -43,7 +47,6 @@ class App extends Component {
       password: {
         value: "your password",
         errorMessage: "Enter correct password",
-        show: false,
       },
     };
   }
@@ -61,9 +64,9 @@ class App extends Component {
         authData
       );
       this.setState({
-        isLoggedIn: true,
         userId: response.data.localId,
       });
+      this.props.loggedIn();
       console.log(this.props.userId);
     } catch (error) {
       console.log(error);
@@ -87,12 +90,6 @@ class App extends Component {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  submitHandler = (e) => {
-    e.preventDefault();
-    document.getElementById("Auth-email").value = "";
-    document.getElementById("Auth-pass").value = "";
   };
 
   emailChangeHandler = (e) => {
@@ -135,37 +132,28 @@ class App extends Component {
     });
   };
 
-  showPasswordHandler = (e) => {
-    e.preventDefault();
-    const password = { ...this.state.password };
-
-    password.show = !this.state.password.show;
-    this.setState({
-      password,
-    });
-  };
-
   async componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log(this.state);
     if (this.state.isTyping !== prevState.isTyping) {
       try {
         await axios.post(
           "https://react-rooms-reserve.firebaseio.com/first-room-this-week.json",
-          this.state.contentFirst
+          this.props.contentFirst
         );
 
         await axios.post(
           "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json",
-          this.state.contentNextFirst
+          this.props.contentNextFirst
         );
 
         await axios.post(
           "https://react-rooms-reserve.firebaseio.com/second-room-this-week.json",
-          this.state.contentSecond
+          this.props.contentSecond
         );
 
         await axios.post(
           "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json",
-          this.state.contentNextSecond
+          this.props.contentNextSecond
         );
       } catch (error) {
         console.log(error);
@@ -228,12 +216,20 @@ class App extends Component {
           );
 
           this.setState({
-            contentFirst: lastElementFromDataBase(responseFirstThis),
-            contentNextFirst: lastElementFromDataBase(responseFirstNext),
-            contentSecond: lastElementFromDataBase(responseSecondThis),
-            contentNextSecond: lastElementFromDataBase(responseSecondNext),
             isLoading: false,
           });
+          this.props.getContentFirst(
+            lastElementFromDataBase(responseFirstThis)
+          );
+          this.props.getContentNextFirst(
+            lastElementFromDataBase(responseFirstNext)
+          );
+          this.props.getContentSecond(
+            lastElementFromDataBase(responseSecondThis)
+          );
+          this.props.getContentNextSecond(
+            lastElementFromDataBase(responseSecondNext)
+          );
         } catch (error) {
           console.log(error);
         }
@@ -314,12 +310,16 @@ class App extends Component {
           );
 
           this.setState({
-            contentFirst: lastElementFromDataBase(responseFirstNext),
-            contentNextFirst: generateEmpryWeek(),
-            contentSecond: lastElementFromDataBase(responseSecondNext),
-            contentNextSecond: generateEmpryWeek(),
             isLoading: false,
           });
+          this.props.getContentFirst(
+            lastElementFromDataBase(responseFirstNext)
+          );
+          this.props.getContentNextFirst(generateEmpryWeek());
+          this.props.getContentSecond(
+            lastElementFromDataBase(responseSecondNext)
+          );
+          this.props.getContentNextSecond(generateEmpryWeek());
         } catch (error) {
           console.log(error);
         }
@@ -384,47 +384,23 @@ class App extends Component {
 
         //записываем пустые состояния
         this.setState({
-          contentFirst: generateEmpryWeek(),
-          contentNextFirst: generateEmpryWeek(),
-          contentSecond: generateEmpryWeek(),
-          contentNextSecond: generateEmpryWeek(),
           isLoading: false,
         });
+        this.props.getContentFirst(generateEmpryWeek());
+        this.props.getContentNextFirst(generateEmpryWeek());
+        this.props.getContentSecond(generateEmpryWeek());
+        this.props.getContentNextSecond(generateEmpryWeek());
       }
     } catch (error) {
       console.log(error);
     }
 
-    //удаляем лишние данные
-
-    try {
-      const response = await axios.get(
-        "https://react-rooms-reserve.firebaseio.com/.json"
-      );
-
-      for (let i = 0; i < Object.keys(response.data).length; i++) {
-        const responseObj = await axios.get(
-          `https://react-rooms-reserve.firebaseio.com/${
-            Object.keys(response.data)[i]
-          }.json`
-        );
-
-        for (let j = 0; j < Object.keys(responseObj.data).length - 1; j++) {
-          await axios.delete(
-            `https://react-rooms-reserve.firebaseio.com/${
-              Object.keys(response.data)[i]
-            }/${Object.keys(responseObj.data)[j]}.json`
-          );
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    deletePrevStatesFromDB();
   }
 
   //обработчик события для первой комнаты и текущей недели
   changeHandlerFirstRoomCurrentWeek = ([day, number], e) => {
-    let data = [...this.state.contentFirst];
+    let data = [...this.props.contentFirst];
 
     const key = Object.keys(data[day])[number];
 
@@ -457,15 +433,13 @@ class App extends Component {
         data[day][key].userId = this.state.userId;
       }
 
-      this.setState({
-        contentFirst: data,
-      });
+      this.props.getContentFirst(data);
     }
   };
 
   //обработчик события для первой комнаты и следующей недели
   changeHandlerFirstRoomNextWeek = ([day, number], e) => {
-    let data = [...this.state.contentNextFirst];
+    let data = [...this.props.contentNextFirst];
 
     const key = Object.keys(data[day])[number];
 
@@ -498,15 +472,13 @@ class App extends Component {
         data[day][key].userId = this.state.userId;
       }
 
-      this.setState({
-        contentNextFirst: data,
-      });
+      this.props.getContentNextFirst(data);
     }
   };
 
   //обработчик события для второй комнаты и текущей недели
   changeHandlerSecondRoomCurrentWeek = ([day, number], e) => {
-    let data = [...this.state.contentSecond];
+    let data = [...this.props.contentSecond];
 
     const key = Object.keys(data[day])[number];
 
@@ -539,15 +511,13 @@ class App extends Component {
         data[day][key].userId = this.state.userId;
       }
 
-      this.setState({
-        contentSecond: data,
-      });
+      this.props.getContentSecond(data);
     }
   };
 
   //обработчик события для второй комнаты и следующей недели
   changeHandlerSecondRoomNextWeek = ([day, number], e) => {
-    let data = [...this.state.contentNextSecond];
+    let data = [...this.props.contentNextSecond];
 
     const key = Object.keys(data[day])[number];
 
@@ -580,9 +550,7 @@ class App extends Component {
         data[day][key].userId = this.state.userId;
       }
 
-      this.setState({
-        contentNextSecond: data,
-      });
+      this.props.getContentNextSecond(data);
     }
   };
 
@@ -607,10 +575,8 @@ class App extends Component {
         isEmailValid={this.state.isEmailValid}
         loginHandler={this.loginHandler}
         registerHandler={this.registerHandler}
-        submitHandler={this.submitHandler}
         emailChangeHandler={this.emailChangeHandler}
         passwordChangeHandler={this.passwordChangeHandler}
-        showPasswordHandler={this.showPasswordHandler}
       />
     );
 
@@ -620,9 +586,9 @@ class App extends Component {
           this.changeHandlerFirstRoomCurrentWeek
         }
         changeHandlerFirstRoomNextWeek={this.changeHandlerFirstRoomNextWeek}
-        content={this.state.contentFirst}
+        content={this.props.contentFirst}
         number="1"
-        contentNext={this.state.contentNextFirst}
+        contentNext={this.props.contentNextFirst}
         focusHandler={this.focusHandler}
         dates={this.props.dates}
         datesNext={this.props.datesNext}
@@ -635,8 +601,8 @@ class App extends Component {
           this.changeHandlerSecondRoomCurrentWeek
         }
         changeHandlerSecondRoomNextWeek={this.changeHandlerSecondRoomNextWeek}
-        content={this.state.contentSecond}
-        contentNext={this.state.contentNextSecond}
+        content={this.props.contentSecond}
+        contentNext={this.props.contentNextSecond}
         number="2"
         focusHandler={this.focusHandler}
         dates={this.props.dates}
@@ -646,30 +612,30 @@ class App extends Component {
 
     const home = (
       <Home
-        contentFirst={this.state.contentFirst}
-        contentNextFirst={this.state.contentNextFirst}
-        contentSecond={this.state.contentSecond}
-        contentNextSecond={this.state.contentNextSecond}
+        contentFirst={this.props.contentFirst}
+        contentNextFirst={this.props.contentNextFirst}
+        contentSecond={this.props.contentSecond}
+        contentNextSecond={this.props.contentNextSecond}
         email={this.state.email}
         userId={this.state.userId}
       />
     );
 
     return (
-      <Layout isLoggedIn={this.state.isLoggedIn} isAlert={this.state.isAlert}>
+      <Layout isLoggedIn={this.props.isLoggedIn} isAlert={this.state.isAlert}>
         <Switch>
           <Route
             path="/"
             exact
-            render={() => (this.state.isLoggedIn ? home : auth)}
+            render={() => (this.props.isLoggedIn ? home : auth)}
           />
-          {this.state.isLoggedIn ? (
+          {this.props.isLoggedIn ? (
             <Route path="/room1" render={() => week1} />
           ) : (
             <Route component={ErrorPage} />
           )}
 
-          {this.state.isLoggedIn ? (
+          {this.props.isLoggedIn ? (
             <Route path="/room2" render={() => week2} />
           ) : (
             <Route component={ErrorPage} />
@@ -685,6 +651,11 @@ function mapStateToProps(state) {
   return {
     dates: state.app.dates,
     datesNext: state.app.datesNext,
+    isLoggedIn: state.app.isLoggedIn,
+    contentFirst: state.app.contentFirst,
+    contentNextFirst: state.app.contentNextFirst,
+    contentSecond: state.app.contentSecond,
+    contentNextSecond: state.app.contentNextSecond,
   };
 }
 
@@ -692,6 +663,11 @@ function mapDispatchToProps(dispatch) {
   return {
     calculateDates: (array) => dispatch(calculateDates(array)),
     calculateNextDates: (array) => dispatch(calculateNextDates(array)),
+    loggedIn: () => dispatch(loggedIn()),
+    getContentFirst: (array) => dispatch(getContentFirst(array)),
+    getContentNextFirst: (array) => dispatch(getContentNextFirst(array)),
+    getContentSecond: (array) => dispatch(getContentSecond(array)),
+    getContentNextSecond: (array) => dispatch(getContentNextSecond(array)),
   };
 }
 
@@ -700,6 +676,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 //в будущем:
 //поработать с домашней страницей
 //добавить подтверждение регистрации по почте
-
-//также разобраться в userId
-//бывает что остается и запрещает редактировать другому пользователю
