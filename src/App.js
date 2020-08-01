@@ -16,7 +16,6 @@ import {
   getTodayDate,
   deletePrevStatesFromDB,
 } from "./funcs/funcs";
-import is from "is_js";
 
 //redux
 import { connect } from "react-redux";
@@ -28,6 +27,7 @@ import {
   getContentNextFirst,
   getContentSecond,
   getContentNextSecond,
+  setTypingState,
 } from "./store/actions/app";
 
 class App extends Component {
@@ -35,106 +35,13 @@ class App extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      isTyping: false,
       userId: "",
-      isEmailValid: true,
-      isPasswordValid: true,
       isAlert: false,
-      email: {
-        value: "your email",
-        errorMessage: "Enter correct email",
-      },
-      password: {
-        value: "your password",
-        errorMessage: "Enter correct password",
-      },
     };
   }
 
-  loginHandler = async () => {
-    const authData = {
-      email: this.state.email.value,
-      password: this.state.password.value,
-      returnSecureToken: true,
-    };
-
-    try {
-      const response = await axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0",
-        authData
-      );
-      this.setState({
-        userId: response.data.localId,
-      });
-      this.props.loggedIn();
-      console.log(this.props.userId);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  registerHandler = async () => {
-    const authData = {
-      email: this.state.email.value,
-      password: this.state.password.value,
-      returnSecureToken: true,
-    };
-
-    try {
-      const response = await axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0",
-        authData
-      );
-
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  emailChangeHandler = (e) => {
-    const value = e.target.value;
-    const email = { ...this.state.email };
-
-    let isValid = true;
-
-    if (value.trim() === "" || !is.email(value)) {
-      isValid = false;
-    }
-
-    if (isValid) {
-      email.value = value;
-    }
-
-    this.setState({
-      isEmailValid: isValid,
-      email,
-    });
-  };
-
-  passwordChangeHandler = (e) => {
-    const value = e.target.value;
-    const password = { ...this.state.password };
-
-    let isValid = true;
-
-    if (value.length <= 5) {
-      isValid = false;
-    }
-
-    if (isValid) {
-      password.value = value;
-    }
-
-    this.setState({
-      isPasswordValid: isValid,
-      password,
-    });
-  };
-
   async componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(this.state);
-    if (this.state.isTyping !== prevState.isTyping) {
+    if (this.props.isTyping !== prevProps.isTyping) {
       try {
         await axios.post(
           "https://react-rooms-reserve.firebaseio.com/first-room-this-week.json",
@@ -159,9 +66,12 @@ class App extends Component {
         console.log(error);
       }
     }
+
+    deletePrevStatesFromDB();
   }
 
   async componentDidMount() {
+    console.log(this.state.userId);
     //обработка смены дат
     try {
       //генерируем текущие даты
@@ -182,8 +92,6 @@ class App extends Component {
         twoWeeksDates[8],
         twoWeeksDates[9],
       ]);
-
-      console.log(this.props);
 
       //получаем даты из БД
       const response = await axios.get(
@@ -394,12 +302,11 @@ class App extends Component {
     } catch (error) {
       console.log(error);
     }
-
-    deletePrevStatesFromDB();
   }
 
   //обработчик события для первой комнаты и текущей недели
   changeHandlerFirstRoomCurrentWeek = ([day, number], e) => {
+    console.log(this.state.userId);
     let data = [...this.props.contentFirst];
 
     const key = Object.keys(data[day])[number];
@@ -554,12 +461,6 @@ class App extends Component {
     }
   };
 
-  focusHandler = () => {
-    this.setState({
-      isTyping: !this.state.isTyping,
-    });
-  };
-
   showAlertWindow = () => {
     this.setState({
       isAlert: !this.state.isAlert,
@@ -567,19 +468,6 @@ class App extends Component {
   };
 
   render() {
-    const auth = (
-      <Auth
-        email={this.state.email}
-        password={this.state.password}
-        isPasswordValid={this.state.isPasswordValid}
-        isEmailValid={this.state.isEmailValid}
-        loginHandler={this.loginHandler}
-        registerHandler={this.registerHandler}
-        emailChangeHandler={this.emailChangeHandler}
-        passwordChangeHandler={this.passwordChangeHandler}
-      />
-    );
-
     const week1 = (
       <WeekSheet
         changeHandlerFirstRoomCurrentWeek={
@@ -610,16 +498,7 @@ class App extends Component {
       />
     );
 
-    const home = (
-      <Home
-        contentFirst={this.props.contentFirst}
-        contentNextFirst={this.props.contentNextFirst}
-        contentSecond={this.props.contentSecond}
-        contentNextSecond={this.props.contentNextSecond}
-        email={this.state.email}
-        userId={this.state.userId}
-      />
-    );
+    const home = <Home email={this.props.email} />;
 
     return (
       <Layout isLoggedIn={this.props.isLoggedIn} isAlert={this.state.isAlert}>
@@ -627,7 +506,7 @@ class App extends Component {
           <Route
             path="/"
             exact
-            render={() => (this.props.isLoggedIn ? home : auth)}
+            render={() => (this.props.isLoggedIn ? home : <Auth />)}
           />
           {this.props.isLoggedIn ? (
             <Route path="/room1" render={() => week1} />
@@ -656,6 +535,11 @@ function mapStateToProps(state) {
     contentNextFirst: state.app.contentNextFirst,
     contentSecond: state.app.contentSecond,
     contentNextSecond: state.app.contentNextSecond,
+
+    email: state.auth.email,
+    password: state.auth.password,
+
+    isTyping: state.app.isTyping,
   };
 }
 
@@ -668,6 +552,7 @@ function mapDispatchToProps(dispatch) {
     getContentNextFirst: (array) => dispatch(getContentNextFirst(array)),
     getContentSecond: (array) => dispatch(getContentSecond(array)),
     getContentNextSecond: (array) => dispatch(getContentNextSecond(array)),
+    setTypingState: () => dispatch(setTypingState()),
   };
 }
 
@@ -676,3 +561,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 //в будущем:
 //поработать с домашней страницей
 //добавить подтверждение регистрации по почте
+
+//сейчас небольшой баг с редактированием
+//нужно определиться уже таки с сохранением сессии и записывать ИД пользователя. Ну и дальше его сравнивать с табличными
+//все готово, но сейчас не с чем сравнивать просто
+//это появилось из-за того, что я loginHandler перенес в компонент Auth.js

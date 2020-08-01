@@ -1,8 +1,19 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "./Auth.css";
 
 import eye from "../../pics/eye.svg";
 import eye_off from "../../pics/eye_off.svg";
+
+//redux
+import { connect } from "react-redux";
+import {
+  setEmail,
+  setPassword,
+  changeEmail,
+  changePassword,
+} from "../../store/actions/auth";
+import { loggedIn } from "../../store/actions/app";
 
 class Auth extends Component {
   state = {
@@ -22,6 +33,45 @@ class Auth extends Component {
     });
   };
 
+  registerHandler = async () => {
+    const authData = {
+      email: this.props.email.value,
+      password: this.props.password.value,
+      returnSecureToken: true,
+    };
+
+    try {
+      await axios.post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0",
+        authData
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  loginHandler = async () => {
+    const authData = {
+      email: this.props.email.value,
+      password: this.props.password.value,
+      returnSecureToken: true,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0",
+        authData
+      );
+      this.setState({
+        userId: response.data.localId,
+      });
+      this.props.loggedIn();
+      console.log(`это нужно сохранять в сессии для сравнения! ${this.state.userId}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     return (
       <div className="Auth">
@@ -32,7 +82,7 @@ class Auth extends Component {
               <label htmlFor="Auth-email">Email:</label>
               <input
                 type="email"
-                onChange={(e) => this.props.emailChangeHandler(e)}
+                onChange={(e) => this.props.changeEmail(e)}
                 id="Auth-email"
                 required
                 placeholder="email"
@@ -49,7 +99,7 @@ class Auth extends Component {
               <label htmlFor="Auth-pass">Password:</label>
               <input
                 type={this.state.passwordShow ? "text" : "password"}
-                onChange={(e) => this.props.passwordChangeHandler(e)}
+                onChange={(e) => this.props.changePassword(e)}
                 id="Auth-pass"
                 required
                 placeholder="password"
@@ -72,7 +122,7 @@ class Auth extends Component {
                 disabled={
                   !this.props.isEmailValid || !this.props.isPasswordValid
                 }
-                onClick={this.props.loginHandler}
+                onClick={this.loginHandler}
               >
                 Login
               </button>
@@ -81,7 +131,7 @@ class Auth extends Component {
                 disabled={
                   !this.props.isEmailValid || !this.props.isPasswordValid
                 }
-                onClick={this.props.registerHandler}
+                onClick={this.registerHandler}
               >
                 Registration
               </button>
@@ -93,4 +143,24 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+function mapStateToProps(state) {
+  return {
+    email: state.auth.email,
+    password: state.auth.password,
+    isEmailValid: state.auth.isEmailValid,
+    isPasswordValid: state.auth.isPasswordValid,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    loggedIn: () => dispatch(loggedIn()),
+
+    setEmail: (obj) => dispatch(setEmail(obj)),
+    setPassword: (obj) => dispatch(setPassword(obj)),
+    changeEmail: (e) => dispatch(changeEmail(e)),
+    changePassword: (e) => dispatch(changePassword(e)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

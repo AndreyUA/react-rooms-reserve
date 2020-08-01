@@ -6,6 +6,7 @@ import {
   SET_CONTENT_FIRST_NEXT,
   SET_CONTENT_SECOND,
   SET_CONTENT_SECOND_NEXT,
+  SET_TYPING
 } from "./actionTypes";
 
 export function calculateDates(array) {
@@ -55,4 +56,19 @@ export function getContentNextSecond(array) {
     type: SET_CONTENT_SECOND_NEXT,
     contentNextSecond: array,
   };
+}
+
+export function reverseTypingState(bool) {
+  return {
+    type: SET_TYPING,
+    isTyping: !bool
+  }
+}
+
+export function setTypingState() {
+  return (dispatch, getState) => {
+    const typeState = getState().app.isTyping;
+
+    dispatch(reverseTypingState(typeState));
+  }
 }

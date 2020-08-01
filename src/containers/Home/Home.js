@@ -3,19 +3,19 @@ import "./Home.css";
 
 class Home extends Component {
   componentDidMount() {
-    this.showUserReserve();
+    //this.showUserReserve();
   }
 
-  showUserReserve = () => {
-    for (let i in this.props.contentFirst) {
-      for (let j in this.props.contentFirst[i]) {
+  //showUserReserve = () => {
+    //for (let i in this.props.contentFirst) {
+      //for (let j in this.props.contentFirst[i]) {
         //тут добавить проверку на юзерИд
         //соответствует - можно выводить
         //и продумать шутку со временем
         // console.log(this.props.contentFirst[i][j]);
-      }
-    }
-  };
+     // }
+    //}
+  //};
 
   render() {
     return (

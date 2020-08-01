@@ -6,6 +6,7 @@ import {
   SET_CONTENT_FIRST_NEXT,
   SET_CONTENT_SECOND,
   SET_CONTENT_SECOND_NEXT,
+  SET_TYPING,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   contentNextFirst: [],
   contentSecond: [],
   contentNextSecond: [],
+  isTyping: false,
 };
 
 export default function appReducer(state = initialState, action) {
@@ -55,6 +57,11 @@ export default function appReducer(state = initialState, action) {
       return {
         ...state,
         contentNextSecond: action.contentNextSecond,
+      };
+    case SET_TYPING:
+      return {
+        ...state,
+        isTyping: action.isTyping,
       };
     default:
       return state;

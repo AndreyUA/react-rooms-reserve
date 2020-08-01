@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { setTypingState } from "../../store/actions/app"
 
 const Cell = (props) => {
   return (
@@ -25,7 +27,6 @@ const Cell = (props) => {
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === "Escape") {
             e.target.blur();
-            props.focusHandler();
           }
         }}
         onBlur={(e) => {
@@ -46,8 +47,7 @@ const Cell = (props) => {
               .closest(".Day-body-cell")
               .classList.remove("Day-body-cell-full");
           }
-
-          props.focusHandler();
+          props.setTypingState();
         }}
         className="Day-body-cell-content"
         value={
@@ -60,4 +60,16 @@ const Cell = (props) => {
   );
 };
 
-export default Cell;
+function mapStateToProps(state) {
+  return {
+    isTyping: state.app.isTyping,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setTypingState: () => dispatch(setTypingState())
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Cell);

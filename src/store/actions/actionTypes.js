@@ -1,3 +1,4 @@
+//for app
 export const SET_CURRENT_WEEK = "SET_CURRENT_WEEK";
 export const SET_NEXT_WEEK = "SET_NEXT_WEEK";
 export const SET_LOGGED_IN = "SET_LOGGED_IN";
@@ -5,3 +6,10 @@ export const SET_CONTENT_FIRST = "SET_CONTENT_FIRST";
 export const SET_CONTENT_FIRST_NEXT = "SET_CONTENT_FIRST_NEXT";
 export const SET_CONTENT_SECOND = "SET_CONTENT_SECOND";
 export const SET_CONTENT_SECOND_NEXT = "SET_CONTENT_SECOND_NEXT";
+export const SET_TYPING = "SET_TYPING";
+
+//for auth
+export const SET_EMAIL = "SET_EMAIL";
+export const SET_PASSWORD = "SET_PASSWORD";
+export const SET_EMAIL_VALID = "SET_EMAIL_VALID";
+export const SET_PASSWORD_VALID = "SET_PASSWORD_VALID";
