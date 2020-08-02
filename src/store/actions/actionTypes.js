@@ -7,6 +7,7 @@ export const SET_CONTENT_FIRST_NEXT = "SET_CONTENT_FIRST_NEXT";
 export const SET_CONTENT_SECOND = "SET_CONTENT_SECOND";
 export const SET_CONTENT_SECOND_NEXT = "SET_CONTENT_SECOND_NEXT";
 export const SET_TYPING = "SET_TYPING";
+export const SET_LOADING = "SET_LOADING";
 
 //for auth
 export const SET_EMAIL = "SET_EMAIL";

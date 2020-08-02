@@ -28,13 +28,13 @@ import {
   getContentSecond,
   getContentNextSecond,
   setTypingState,
+  dataIsLoading,
 } from "./store/actions/app";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true,
       userId: "",
       isAlert: false,
     };
@@ -71,7 +71,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.state.userId);
+
     //обработка смены дат
     try {
       //генерируем текущие даты
@@ -122,10 +122,8 @@ class App extends Component {
           const responseSecondNext = await axios.get(
             "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json"
           );
-
-          this.setState({
-            isLoading: false,
-          });
+          
+          this.props.dataIsLoading();
           this.props.getContentFirst(
             lastElementFromDataBase(responseFirstThis)
           );
@@ -161,48 +159,40 @@ class App extends Component {
           //а теперь переписываем все в ДБ
           //первая комната, текущая неделя
           try {
-            const response = await axios.post(
+            await axios.post(
               "https://react-rooms-reserve.firebaseio.com/first-room-this-week.json",
               lastElementFromDataBase(responseFirstNext)
             );
-
-            console.log(response);
           } catch (error) {
             console.log(error);
           }
 
           //первая комната, следующая неделя
           try {
-            const response = await axios.post(
+            await axios.post(
               "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json",
               generateEmpryWeek()
             );
-
-            console.log(response);
           } catch (error) {
             console.log(error);
           }
 
           //вторая комната, текущая неделя
           try {
-            const response = await axios.post(
+            await axios.post(
               "https://react-rooms-reserve.firebaseio.com/second-room-this-week.json",
               lastElementFromDataBase(responseSecondNext)
             );
-
-            console.log(response);
           } catch (error) {
             console.log(error);
           }
 
           //вторая комната, следующая неделя
           try {
-            const response = await axios.post(
+            await axios.post(
               "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json",
               generateEmpryWeek()
             );
-
-            console.log(response);
           } catch (error) {
             console.log(error);
           }
@@ -217,9 +207,7 @@ class App extends Component {
             twoWeeksDates
           );
 
-          this.setState({
-            isLoading: false,
-          });
+          this.props.dataIsLoading();
           this.props.getContentFirst(
             lastElementFromDataBase(responseFirstNext)
           );
@@ -241,45 +229,37 @@ class App extends Component {
       ) {
         //генерируем все пустое
         try {
-          const response = await axios.post(
+          await axios.post(
             "https://react-rooms-reserve.firebaseio.com/first-room-this-week.json",
             generateEmpryWeek()
           );
-
-          console.log(response);
         } catch (error) {
           console.log(error);
         }
 
         try {
-          const response = await axios.post(
+          await axios.post(
             "https://react-rooms-reserve.firebaseio.com/first-room-next-week.json",
             generateEmpryWeek()
           );
-
-          console.log(response);
         } catch (error) {
           console.log(error);
         }
 
         try {
-          const response = await axios.post(
+          await axios.post(
             "https://react-rooms-reserve.firebaseio.com/second-room-this-week.json",
             generateEmpryWeek()
           );
-
-          console.log(response);
         } catch (error) {
           console.log(error);
         }
 
         try {
-          const response = await axios.post(
+          await axios.post(
             "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json",
             generateEmpryWeek()
           );
-
-          console.log(response);
         } catch (error) {
           console.log(error);
         }
@@ -291,9 +271,8 @@ class App extends Component {
         );
 
         //записываем пустые состояния
-        this.setState({
-          isLoading: false,
-        });
+        
+        this.props.dataIsLoading();
         this.props.getContentFirst(generateEmpryWeek());
         this.props.getContentNextFirst(generateEmpryWeek());
         this.props.getContentSecond(generateEmpryWeek());
@@ -306,7 +285,6 @@ class App extends Component {
 
   //обработчик события для первой комнаты и текущей недели
   changeHandlerFirstRoomCurrentWeek = ([day, number], e) => {
-    console.log(this.state.userId);
     let data = [...this.props.contentFirst];
 
     const key = Object.keys(data[day])[number];
@@ -535,11 +513,11 @@ function mapStateToProps(state) {
     contentNextFirst: state.app.contentNextFirst,
     contentSecond: state.app.contentSecond,
     contentNextSecond: state.app.contentNextSecond,
+    isTyping: state.app.isTyping,
+    isLoading: state.app.isLoading,
 
     email: state.auth.email,
     password: state.auth.password,
-
-    isTyping: state.app.isTyping,
   };
 }
 
@@ -553,6 +531,7 @@ function mapDispatchToProps(dispatch) {
     getContentSecond: (array) => dispatch(getContentSecond(array)),
     getContentNextSecond: (array) => dispatch(getContentNextSecond(array)),
     setTypingState: () => dispatch(setTypingState()),
+    dataIsLoading: () => dispatch(dataIsLoading()),
   };
 }
 

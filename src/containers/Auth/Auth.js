@@ -62,6 +62,12 @@ class Auth extends Component {
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0",
         authData
       );
+
+
+      
+      //ВОТ ТУТ НУЖНО ЗАПИСАТЬ ДАННЫЙ В СЕССИЮ!!!!!
+
+
       this.setState({
         userId: response.data.localId,
       });

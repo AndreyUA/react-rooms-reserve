@@ -7,6 +7,7 @@ import {
   SET_CONTENT_SECOND,
   SET_CONTENT_SECOND_NEXT,
   SET_TYPING,
+  SET_LOADING,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   contentSecond: [],
   contentNextSecond: [],
   isTyping: false,
+  isLoading: true,
 };
 
 export default function appReducer(state = initialState, action) {
@@ -62,6 +64,11 @@ export default function appReducer(state = initialState, action) {
       return {
         ...state,
         isTyping: action.isTyping,
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        isLoading: false,
       };
     default:
       return state;
