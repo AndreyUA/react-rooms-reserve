@@ -2,6 +2,7 @@ import {
   SET_CURRENT_WEEK,
   SET_NEXT_WEEK,
   SET_LOGGED_IN,
+  SET_LOGGED_OUT,
   SET_CONTENT_FIRST,
   SET_CONTENT_FIRST_NEXT,
   SET_CONTENT_SECOND,
@@ -28,6 +29,13 @@ export function loggedIn() {
   return {
     type: SET_LOGGED_IN,
     isLoggedIn: true,
+  };
+}
+
+export function loggedOut() {
+  return {
+    type: SET_LOGGED_OUT,
+    isLoggedIn: false,
   };
 }
 

@@ -2,6 +2,7 @@ import {
   SET_CURRENT_WEEK,
   SET_NEXT_WEEK,
   SET_LOGGED_IN,
+  SET_LOGGED_OUT,
   SET_CONTENT_FIRST,
   SET_CONTENT_FIRST_NEXT,
   SET_CONTENT_SECOND,
@@ -38,6 +39,11 @@ export default function appReducer(state = initialState, action) {
       return {
         ...state,
         isLoggedIn: true,
+      };
+    case SET_LOGGED_OUT:
+      return {
+        ...state,
+        isLoggedIn: false,
       };
     case SET_CONTENT_FIRST:
       return {

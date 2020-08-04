@@ -39,7 +39,6 @@ class Auth extends Component {
 
   loginHandler = async () => {
     this.props.auth(this.props.email.value, this.props.password.value, true);
-    
   };
 
   render() {

@@ -6,8 +6,10 @@ import Auth from "./containers/Auth/Auth";
 import Home from "./containers/Home/Home";
 import WeekSheet from "./containers/WeekSheet/WeekSheet";
 import ErrorPage from "./containers/ErrorPage/ErrorPage";
+import Loader from "./components/Loader/Loader";
+import Logout from "./components/Logout/Logout";
 
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import axios from "axios";
 import {
   lastElementFromDataBase,
@@ -30,6 +32,7 @@ import {
   setTypingState,
   dataIsLoading,
 } from "./store/actions/app";
+import { autoLogin } from "./store/actions/auth";
 
 class App extends Component {
   constructor(props) {
@@ -41,14 +44,6 @@ class App extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
-
-    //нужно проверить как это все работает
-    //на уроках другая реализация
-    //а еще нужно сделать логаут
-    if (!!localStorage.getItem("token")) {
-      this.props.loggedIn();
-    };
-
     if (this.props.isTyping !== prevProps.isTyping) {
       try {
         await axios.post(
@@ -79,7 +74,8 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    console.log('!!!')
+    console.log(this.props);
+    this.props.autoLogin();
 
     //обработка смены дат
     try {
@@ -131,8 +127,7 @@ class App extends Component {
           const responseSecondNext = await axios.get(
             "https://react-rooms-reserve.firebaseio.com/second-room-next-week.json"
           );
-          
-          this.props.dataIsLoading();
+
           this.props.getContentFirst(
             lastElementFromDataBase(responseFirstThis)
           );
@@ -145,6 +140,7 @@ class App extends Component {
           this.props.getContentNextSecond(
             lastElementFromDataBase(responseSecondNext)
           );
+          this.props.dataIsLoading();
         } catch (error) {
           console.log(error);
         }
@@ -216,7 +212,6 @@ class App extends Component {
             twoWeeksDates
           );
 
-          this.props.dataIsLoading();
           this.props.getContentFirst(
             lastElementFromDataBase(responseFirstNext)
           );
@@ -225,6 +220,8 @@ class App extends Component {
             lastElementFromDataBase(responseSecondNext)
           );
           this.props.getContentNextSecond(generateEmpryWeek());
+
+          this.props.dataIsLoading();
         } catch (error) {
           console.log(error);
         }
@@ -280,12 +277,13 @@ class App extends Component {
         );
 
         //записываем пустые состояния
-        
-        this.props.dataIsLoading();
+
         this.props.getContentFirst(generateEmpryWeek());
         this.props.getContentNextFirst(generateEmpryWeek());
         this.props.getContentSecond(generateEmpryWeek());
         this.props.getContentNextSecond(generateEmpryWeek());
+
+        this.props.dataIsLoading();
       }
     } catch (error) {
       console.log(error);
@@ -496,17 +494,24 @@ class App extends Component {
             render={() => (this.props.isLoggedIn ? home : <Auth />)}
           />
           {this.props.isLoggedIn ? (
-            <Route path="/room1" render={() => week1} />
+            <Route
+              path="/room1"
+              render={() => (this.props.isLoading ? <Loader /> : week1)}
+            />
           ) : (
             <Route component={ErrorPage} />
           )}
 
           {this.props.isLoggedIn ? (
-            <Route path="/room2" render={() => week2} />
+            <Route
+              path="/room2"
+              render={() => (this.props.isLoading ? <Loader /> : week2)}
+            />
           ) : (
             <Route component={ErrorPage} />
           )}
-          <Route component={ErrorPage} />
+          <Route path="/logout" render={() => <Logout />} />
+          <Redirect to="/" />
         </Switch>
       </Layout>
     );
@@ -541,6 +546,7 @@ function mapDispatchToProps(dispatch) {
     getContentNextSecond: (array) => dispatch(getContentNextSecond(array)),
     setTypingState: () => dispatch(setTypingState()),
     dataIsLoading: () => dispatch(dataIsLoading()),
+    autoLogin: () => dispatch(autoLogin()),
   };
 }
 
@@ -554,3 +560,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 //нужно определиться уже таки с сохранением сессии и записывать ИД пользователя. Ну и дальше его сравнивать с табличными
 //все готово, но сейчас не с чем сравнивать просто
 //это появилось из-за того, что я loginHandler перенес в компонент Auth.js
+
+//поработать с правами на редактирование

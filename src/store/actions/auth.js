@@ -8,6 +8,7 @@ import {
   AUTH_SUCCES,
 } from "./actionTypes";
 import axios from "axios";
+import { loggedIn, loggedOut } from "./app";
 
 export function setEmail(obj) {
   return {
@@ -90,26 +91,21 @@ export function auth(email, password, isLogin) {
     let url =
       "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0";
 
+    //for login
     if (isLogin) {
-      //for login
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0";
     }
 
     const response = await axios.post(url, authData);
-
     const data = response.data;
-
     const expirationDate = new Date(
       new Date().getTime() + data.expiresIn * 1000
     );
-
     //write token to global obj localStorage
     localStorage.setItem("token", data.idToken);
-
     //write userId to global obj localStorage
     localStorage.setItem("userId", data.localId);
-
     //life time of auth
     localStorage.setItem("expirationDate", expirationDate);
 
@@ -127,14 +123,18 @@ export function autoLogout(time) {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(logout());
+      dispatch(loggedOut());
     }, time * 1000);
   };
 }
 
 export function authSuccess(token) {
-  return {
-    type: AUTH_SUCCES,
-    token,
+  return (dispatch) => {
+    dispatch(loggedIn());
+    return {
+      type: AUTH_SUCCES,
+      token,
+    };
   };
 }
 
@@ -152,15 +152,18 @@ export function autoLogin() {
     const token = localStorage.getItem("token");
     if (!token) {
       dispatch(logout());
+      dispatch(loggedOut());
     } else {
       const expirationDate = new Date(localStorage.getItem("expirationDate"));
       if (expirationDate <= new Date()) {
         dispatch(logout());
+        dispatch(loggedOut());
       } else {
         dispatch(authSuccess(token));
         dispatch(
           autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000)
         );
+        dispatch(loggedIn());
       }
     }
   };
