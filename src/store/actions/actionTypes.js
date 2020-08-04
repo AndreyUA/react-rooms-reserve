@@ -14,3 +14,5 @@ export const SET_EMAIL = "SET_EMAIL";
 export const SET_PASSWORD = "SET_PASSWORD";
 export const SET_EMAIL_VALID = "SET_EMAIL_VALID";
 export const SET_PASSWORD_VALID = "SET_PASSWORD_VALID";
+export const AUTH_SUCCES = "AUTH_SUCCES";
+export const AUTH_LOGOUT = "AUTH_LOGOUT";

@@ -4,7 +4,7 @@ import "./Layout.css";
 import { NavLink } from "react-router-dom";
 import Alert from "../../components/Alert/Alert";
 
-const Layout = (props) => {
+const Layout = props => {
   return (
     <div className="Layout">
       <nav className="Layout-nav">
@@ -25,7 +25,7 @@ const Layout = (props) => {
       <main>
         <Alert isAlert={props.isAlert} />
         {props.children}
-        </main>
+      </main>
     </div>
   );
 };

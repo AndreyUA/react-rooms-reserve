@@ -41,6 +41,14 @@ class App extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
+
+    //нужно проверить как это все работает
+    //на уроках другая реализация
+    //а еще нужно сделать логаут
+    if (!!localStorage.getItem("token")) {
+      this.props.loggedIn();
+    };
+
     if (this.props.isTyping !== prevProps.isTyping) {
       try {
         await axios.post(
@@ -71,6 +79,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    console.log('!!!')
 
     //обработка смены дат
     try {

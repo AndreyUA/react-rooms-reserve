@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import "./Auth.css";
 
 import eye from "../../pics/eye.svg";
@@ -12,6 +11,7 @@ import {
   setPassword,
   changeEmail,
   changePassword,
+  auth,
 } from "../../store/actions/auth";
 import { loggedIn } from "../../store/actions/app";
 
@@ -33,49 +33,13 @@ class Auth extends Component {
     });
   };
 
-  registerHandler = async () => {
-    const authData = {
-      email: this.props.email.value,
-      password: this.props.password.value,
-      returnSecureToken: true,
-    };
-
-    try {
-      await axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0",
-        authData
-      );
-    } catch (error) {
-      console.log(error);
-    }
+  registerHandler = () => {
+    this.props.auth(this.props.email.value, this.props.password.value, false);
   };
 
   loginHandler = async () => {
-    const authData = {
-      email: this.props.email.value,
-      password: this.props.password.value,
-      returnSecureToken: true,
-    };
-
-    try {
-      const response = await axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0",
-        authData
-      );
-
-
-      
-      //ВОТ ТУТ НУЖНО ЗАПИСАТЬ ДАННЫЙ В СЕССИЮ!!!!!
-
-
-      this.setState({
-        userId: response.data.localId,
-      });
-      this.props.loggedIn();
-      console.log(`это нужно сохранять в сессии для сравнения! ${this.state.userId}`);
-    } catch (error) {
-      console.log(error);
-    }
+    this.props.auth(this.props.email.value, this.props.password.value, true);
+    
   };
 
   render() {
@@ -166,6 +130,8 @@ function mapDispatchToProps(dispatch) {
     setPassword: (obj) => dispatch(setPassword(obj)),
     changeEmail: (e) => dispatch(changeEmail(e)),
     changePassword: (e) => dispatch(changePassword(e)),
+    auth: (email, password, isLogin) =>
+      dispatch(auth(email, password, isLogin)),
   };
 }
 
