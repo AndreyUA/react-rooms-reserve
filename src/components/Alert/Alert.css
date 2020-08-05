@@ -13,7 +13,7 @@
 .Alert-window {
   background-color: crimson;
   width: 300px;
-  height: 200px;
+  height: 280px;
   border: 2px solid crimson;
   border-radius: 10px;
   text-align: center;
@@ -28,6 +28,7 @@
 
 .Alert-active,
 .Alert-window-active {
+  position: fixed;
   opacity: 1;
   z-index: 10000;
 }

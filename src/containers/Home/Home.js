@@ -21,7 +21,8 @@ class Home extends Component {
     return (
       <div className="Home">
         <h1>Hello!</h1>
-        <h2>Your email: {this.props.email.value}</h2>
+        <h2>Your email: {localStorage.getItem("email")}</h2>
+        <h4>This web app is using react.js, react-router-dom, redux, axios.</h4>
       </div>
     );
   }

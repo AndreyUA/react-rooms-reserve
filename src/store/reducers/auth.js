@@ -5,6 +5,8 @@ import {
   SET_PASSWORD_VALID,
   AUTH_LOGOUT,
   AUTH_SUCCES,
+  INCORRECT_PASSWORD,
+  CORRECT_PASSWORD,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -16,11 +18,10 @@ const initialState = {
     value: "your password",
     errorMessage: "Enter correct password",
   },
-
   isEmailValid: true,
   isPasswordValid: true,
-
   token: null,
+  isPasswordCorrect: true,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -55,6 +56,16 @@ export default function authReducer(state = initialState, action) {
       return {
         ...state,
         token: action.token,
+      };
+    case INCORRECT_PASSWORD:
+      return {
+        ...state,
+        isPasswordCorrect: false,
+      };
+    case CORRECT_PASSWORD:
+      return {
+        ...state,
+        isPasswordCorrect: true,
       };
     default:
       return state;

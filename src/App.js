@@ -38,7 +38,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: "",
       isAlert: false,
     };
   }
@@ -74,7 +73,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.props);
+    console.log(localStorage.getItem("userId"));
     this.props.autoLogin();
 
     //обработка смены дат
@@ -297,7 +296,7 @@ class App extends Component {
     const key = Object.keys(data[day])[number];
 
     if (
-      data[day][key].userId !== this.state.userId &&
+      data[day][key].userId !== localStorage.getItem("userId") &&
       data[day][key].text !== ""
     ) {
       console.log("FAILED");
@@ -312,7 +311,7 @@ class App extends Component {
       }, 2000);
       return;
     } else if (
-      data[day][key].userId === this.state.userId ||
+      data[day][key].userId === localStorage.getItem("userId") ||
       data[day][key].userId === "" ||
       data[day][key].text === ""
     ) {
@@ -322,7 +321,7 @@ class App extends Component {
         data[day][key].userId = "";
       } else {
         data[day][key].text = e.target.value;
-        data[day][key].userId = this.state.userId;
+        data[day][key].userId = localStorage.getItem("userId");
       }
 
       this.props.getContentFirst(data);
@@ -336,7 +335,7 @@ class App extends Component {
     const key = Object.keys(data[day])[number];
 
     if (
-      data[day][key].userId !== this.state.userId &&
+      data[day][key].userId !== localStorage.getItem("userId") &&
       data[day][key].text !== ""
     ) {
       console.log("FAILED");
@@ -351,7 +350,7 @@ class App extends Component {
       }, 2000);
       return;
     } else if (
-      data[day][key].userId === this.state.userId ||
+      data[day][key].userId === localStorage.getItem("userId") ||
       data[day][key].userId === "" ||
       data[day][key].text === ""
     ) {
@@ -361,7 +360,7 @@ class App extends Component {
         data[day][key].userId = "";
       } else {
         data[day][key].text = e.target.value;
-        data[day][key].userId = this.state.userId;
+        data[day][key].userId = localStorage.getItem("userId");
       }
 
       this.props.getContentNextFirst(data);
@@ -375,7 +374,7 @@ class App extends Component {
     const key = Object.keys(data[day])[number];
 
     if (
-      data[day][key].userId !== this.state.userId &&
+      data[day][key].userId !== localStorage.getItem("userId") &&
       data[day][key].text !== ""
     ) {
       console.log("FAILED");
@@ -390,7 +389,7 @@ class App extends Component {
       }, 2000);
       return;
     } else if (
-      data[day][key].userId === this.state.userId ||
+      data[day][key].userId === localStorage.getItem("userId") ||
       data[day][key].userId === "" ||
       data[day][key].text === ""
     ) {
@@ -400,7 +399,7 @@ class App extends Component {
         data[day][key].userId = "";
       } else {
         data[day][key].text = e.target.value;
-        data[day][key].userId = this.state.userId;
+        data[day][key].userId = localStorage.getItem("userId");
       }
 
       this.props.getContentSecond(data);
@@ -414,7 +413,7 @@ class App extends Component {
     const key = Object.keys(data[day])[number];
 
     if (
-      data[day][key].userId !== this.state.userId &&
+      data[day][key].userId !== localStorage.getItem("userId") &&
       data[day][key].text !== ""
     ) {
       console.log("FAILED");
@@ -429,7 +428,7 @@ class App extends Component {
       }, 2000);
       return;
     } else if (
-      data[day][key].userId === this.state.userId ||
+      data[day][key].userId === localStorage.getItem("userId") ||
       data[day][key].userId === "" ||
       data[day][key].text === ""
     ) {
@@ -439,7 +438,7 @@ class App extends Component {
         data[day][key].userId = "";
       } else {
         data[day][key].text = e.target.value;
-        data[day][key].userId = this.state.userId;
+        data[day][key].userId = localStorage.getItem("userId");
       }
 
       this.props.getContentNextSecond(data);
@@ -529,7 +528,6 @@ function mapStateToProps(state) {
     contentNextSecond: state.app.contentNextSecond,
     isTyping: state.app.isTyping,
     isLoading: state.app.isLoading,
-
     email: state.auth.email,
     password: state.auth.password,
   };
@@ -555,10 +553,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 //в будущем:
 //поработать с домашней страницей
 //добавить подтверждение регистрации по почте
-
-//сейчас небольшой баг с редактированием
-//нужно определиться уже таки с сохранением сессии и записывать ИД пользователя. Ну и дальше его сравнивать с табличными
-//все готово, но сейчас не с чем сравнивать просто
-//это появилось из-за того, что я loginHandler перенес в компонент Auth.js
-
-//поработать с правами на редактирование

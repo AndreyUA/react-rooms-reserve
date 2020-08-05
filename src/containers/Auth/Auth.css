@@ -12,7 +12,7 @@
   flex-direction: column;
   justify-content: space-around;
   width: 400px;
-  height: 280px;
+  height: 300px;
   border-radius: 5px;
   background: linear-gradient(270deg, #dddddd 0%, #c5c5c5 100%);
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);

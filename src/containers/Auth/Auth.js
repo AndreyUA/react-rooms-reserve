@@ -80,11 +80,19 @@ class Auth extends Component {
                 <img src={this.state.passwordShow ? eye_off : eye} alt="eye" />
               </div>
             </div>
+
             {this.props.isPasswordValid ? (
               <p className="Auth-correct">Enter your password</p>
             ) : (
               <p className="Auth-error">{this.props.password.errorMessage}</p>
             )}
+
+            {this.props.isPasswordCorrect ? (
+              <p className="Auth-error">&#160;</p>
+            ) : (
+              <p className="Auth-error">Incorrect email or password</p>
+            )}
+
             <div className="Auth-control">
               <button
                 className="Auth-log"
@@ -118,13 +126,13 @@ function mapStateToProps(state) {
     password: state.auth.password,
     isEmailValid: state.auth.isEmailValid,
     isPasswordValid: state.auth.isPasswordValid,
+    isPasswordCorrect: state.auth.isPasswordCorrect,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     loggedIn: () => dispatch(loggedIn()),
-
     setEmail: (obj) => dispatch(setEmail(obj)),
     setPassword: (obj) => dispatch(setPassword(obj)),
     changeEmail: (e) => dispatch(changeEmail(e)),

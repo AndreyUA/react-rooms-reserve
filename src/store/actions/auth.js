@@ -6,6 +6,8 @@ import {
   SET_PASSWORD_VALID,
   AUTH_LOGOUT,
   AUTH_SUCCES,
+  INCORRECT_PASSWORD,
+  CORRECT_PASSWORD,
 } from "./actionTypes";
 import axios from "axios";
 import { loggedIn, loggedOut } from "./app";
@@ -97,25 +99,47 @@ export function auth(email, password, isLogin) {
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0";
     }
 
-    const response = await axios.post(url, authData);
-    const data = response.data;
-    const expirationDate = new Date(
-      new Date().getTime() + data.expiresIn * 1000
-    );
-    //write token to global obj localStorage
-    localStorage.setItem("token", data.idToken);
-    //write userId to global obj localStorage
-    localStorage.setItem("userId", data.localId);
-    //life time of auth
-    localStorage.setItem("expirationDate", expirationDate);
+    try {
+      const response = await axios.post(url, authData);
+      const data = response.data;
+      const expirationDate = new Date(
+        new Date().getTime() + data.expiresIn * 1000
+      );
+      //write token to global obj localStorage
+      localStorage.setItem("token", data.idToken);
+      //write email to global obj localStorage
+      localStorage.setItem("email", data.email);
+      //write userId to global obj localStorage
+      localStorage.setItem("userId", data.localId);
+      //life time of auth
+      localStorage.setItem("expirationDate", expirationDate);
 
-    console.log(`data: ${data}, localStorage: 
-    token: ${localStorage.getItem("token")}
-    userId: ${localStorage.getItem("userId")}
-    expirationDate: ${localStorage.getItem("expirationDate")}
-    `);
-    dispatch(authSuccess(data.idToken));
-    dispatch(autoLogout(data.expiresIn));
+      console.log(`data: ${data}, localStorage: 
+      token: ${localStorage.getItem("token")}
+      userId: ${localStorage.getItem("userId")}
+      expirationDate: ${localStorage.getItem("expirationDate")}
+      `);
+      dispatch(authSuccess(data.idToken));
+      dispatch(autoLogout(data.expiresIn));
+      dispatch(passwordCorrect());
+    } catch (error) {
+      console.log(error);
+      dispatch(passwordIncorrect());
+    }
+  };
+}
+
+export function passwordIncorrect() {
+  return {
+    type: INCORRECT_PASSWORD,
+    isPasswordCorrect: false,
+  };
+}
+
+export function passwordCorrect() {
+  return {
+    type: CORRECT_PASSWORD,
+    isPasswordCorrect: true,
   };
 }
 
@@ -142,6 +166,7 @@ export function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("userId");
   localStorage.removeItem("expirationDate");
+  localStorage.removeItem("email");
   return {
     type: AUTH_LOGOUT,
   };
