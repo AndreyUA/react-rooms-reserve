@@ -3,6 +3,7 @@ import "./Auth.css";
 
 import eye from "../../pics/eye.svg";
 import eye_off from "../../pics/eye_off.svg";
+import google_logo from "../../pics/google-logo.svg";
 
 //redux
 import { connect } from "react-redux";
@@ -12,6 +13,7 @@ import {
   changeEmail,
   changePassword,
   auth,
+  googleAuth,
 } from "../../store/actions/auth";
 import { loggedIn } from "../../store/actions/app";
 
@@ -19,6 +21,19 @@ class Auth extends Component {
   state = {
     passwordShow: false,
   };
+
+  componentDidMount() {
+    try {
+      window.gapi.load("auth2", async function () {
+        await window.gapi.auth2.init({
+          client_id:
+            "510537216725-d5js9v2emra4smm0kki46g06qokuns13.apps.googleusercontent.com",
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   submitHandler = (e) => {
     e.preventDefault();
@@ -33,7 +48,7 @@ class Auth extends Component {
     });
   };
 
-  registerHandler = () => {
+  registerHandler = async () => {
     this.props.auth(this.props.email.value, this.props.password.value, false);
   };
 
@@ -112,6 +127,15 @@ class Auth extends Component {
               >
                 Registration
               </button>
+              <button
+                className="Auth-reg"
+                onClick={(e) => this.props.googleAuth(e)}
+                disabled={
+                  !this.props.isEmailValid || !this.props.isPasswordValid
+                }
+              >
+                <img className="google-logo" src={google_logo} alt="google" />
+              </button>
             </div>
           </form>
         </div>
@@ -139,6 +163,7 @@ function mapDispatchToProps(dispatch) {
     changePassword: (e) => dispatch(changePassword(e)),
     auth: (email, password, isLogin) =>
       dispatch(auth(email, password, isLogin)),
+    googleAuth: (e) => dispatch(googleAuth(e)),
   };
 }
 

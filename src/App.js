@@ -73,7 +73,6 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    console.log(localStorage.getItem("userId"));
     this.props.autoLogin();
 
     //обработка смены дат

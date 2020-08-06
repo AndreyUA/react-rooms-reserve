@@ -80,6 +80,35 @@ export function changePassword(e) {
   };
 }
 
+export function googleAuth(e) {
+  e.preventDefault();
+  return async (dispatch) => {
+    try {
+      const GoogleAuth = await window.gapi.auth2.getAuthInstance().signIn({
+        scope: "profile email",
+      });
+
+      const expirationDate = new Date(
+        new Date().getTime() + GoogleAuth.wc.expires_in * 1000
+      );
+
+      //write token to global obj localStorage
+      localStorage.setItem("token", GoogleAuth.wc.id_token);
+      //write email to global obj localStorage
+      localStorage.setItem("email", GoogleAuth.Ot.yu);
+      //write userId to global obj localStorage
+      localStorage.setItem("userId", GoogleAuth.Da);
+      //life time of auth
+      localStorage.setItem("expirationDate", expirationDate);
+
+      dispatch(authSuccess(GoogleAuth.wc.id_token));
+      dispatch(autoLogout(GoogleAuth.wc.expires_in));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 //universal func for login and register
 export function auth(email, password, isLogin) {
   return async (dispatch) => {
@@ -114,11 +143,6 @@ export function auth(email, password, isLogin) {
       //life time of auth
       localStorage.setItem("expirationDate", expirationDate);
 
-      console.log(`data: ${data}, localStorage: 
-      token: ${localStorage.getItem("token")}
-      userId: ${localStorage.getItem("userId")}
-      expirationDate: ${localStorage.getItem("expirationDate")}
-      `);
       dispatch(authSuccess(data.idToken));
       dispatch(autoLogout(data.expiresIn));
       dispatch(passwordCorrect());
