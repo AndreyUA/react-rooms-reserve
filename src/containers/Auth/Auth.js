@@ -102,11 +102,18 @@ class Auth extends Component {
               <p className="Auth-error">{this.props.password.errorMessage}</p>
             )}
 
-            {this.props.isPasswordCorrect ? (
+            {
+              this.props.isNeedToConfirm ? <p className="Auth-error">
+              Confirm your email!
+            </p> : this.props.isPasswordCorrect ? (
               <p className="Auth-error">&#160;</p>
             ) : (
-              <p className="Auth-error">Incorrect email or password</p>
-            )}
+              <p className="Auth-error">
+                Incorrect email or password or your account doesn't exist.
+              </p>
+            )
+            }
+
 
             <div className="Auth-control">
               <button
@@ -151,6 +158,7 @@ function mapStateToProps(state) {
     isEmailValid: state.auth.isEmailValid,
     isPasswordValid: state.auth.isPasswordValid,
     isPasswordCorrect: state.auth.isPasswordCorrect,
+    isNeedToConfirm: state.auth.isNeedToConfirm,
   };
 }
 

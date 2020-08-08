@@ -8,6 +8,7 @@ import {
   AUTH_SUCCES,
   INCORRECT_PASSWORD,
   CORRECT_PASSWORD,
+  CONFIRM_EMAIL,
 } from "./actionTypes";
 import axios from "axios";
 import { loggedIn, loggedOut } from "./app";
@@ -118,38 +119,78 @@ export function auth(email, password, isLogin) {
       returnSecureToken: true,
     };
 
-    //for registration
-    let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0";
-
     //for login
     if (isLogin) {
-      url =
+      const url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0";
-    }
 
-    try {
-      const response = await axios.post(url, authData);
-      const data = response.data;
-      const expirationDate = new Date(
-        new Date().getTime() + data.expiresIn * 1000
-      );
-      //write token to global obj localStorage
-      localStorage.setItem("token", data.idToken);
-      //write email to global obj localStorage
-      localStorage.setItem("email", data.email);
-      //write userId to global obj localStorage
-      localStorage.setItem("userId", data.localId);
-      //life time of auth
-      localStorage.setItem("expirationDate", expirationDate);
+      try {
+        const response = await axios.post(url, authData);
+        const data = response.data;
+        //console.log('registered: ', response);
 
-      dispatch(authSuccess(data.idToken));
-      dispatch(autoLogout(data.expiresIn));
-      dispatch(passwordCorrect());
-    } catch (error) {
-      console.log(error);
-      dispatch(passwordIncorrect());
+        //check verification
+        const getUserData = await axios.post(
+          "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0",
+          { idToken: data.idToken }
+        );
+
+        if (getUserData.data.users[0].emailVerified) {
+          const expirationDate = new Date(
+            new Date().getTime() + data.expiresIn * 1000
+          );
+          //write token to global obj localStorage
+          localStorage.setItem("token", data.idToken);
+          //write email to global obj localStorage
+          localStorage.setItem("email", data.email);
+          //write userId to global obj localStorage
+          localStorage.setItem("userId", data.localId);
+          //life time of auth
+          localStorage.setItem("expirationDate", expirationDate);
+
+          dispatch(authSuccess(data.idToken));
+          dispatch(autoLogout(data.expiresIn));
+          dispatch(passwordCorrect());
+        } else {
+          //create message for user: email confirmation
+          dispatch(confirmYouEmail());
+        }
+      } catch (error) {
+        console.log(error);
+        dispatch(passwordIncorrect());
+      }
+    } else {
+      //for registration
+      const url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0";
+
+      try {
+        const reg = await axios.post(url, authData);
+        const data = reg.data;
+
+        const verData = {
+          requestType: "VERIFY_EMAIL",
+          idToken: data.idToken,
+        };
+
+        await axios.post(
+          "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBsMASd0VkdSUSdIdbpsQN_LFml1Chi8L0",
+          verData
+        );
+
+        //create message for user: email confirmation
+        dispatch(confirmYouEmail());
+      } catch (error) {
+        console.log(error);
+      }
     }
+  };
+}
+
+export function confirmYouEmail() {
+  return {
+    type: CONFIRM_EMAIL,
+    isNeedToConfirm: true,
   };
 }
 

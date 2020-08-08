@@ -7,6 +7,7 @@ import {
   AUTH_SUCCES,
   INCORRECT_PASSWORD,
   CORRECT_PASSWORD,
+  CONFIRM_EMAIL,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   isPasswordValid: true,
   token: null,
   isPasswordCorrect: true,
+  isNeedToConfirm: false,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -66,6 +68,11 @@ export default function authReducer(state = initialState, action) {
       return {
         ...state,
         isPasswordCorrect: true,
+      };
+    case CONFIRM_EMAIL:
+      return {
+        ...state,
+        isNeedToConfirm: true,
       };
     default:
       return state;
