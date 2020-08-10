@@ -9,6 +9,7 @@ import ErrorPage from "./containers/ErrorPage/ErrorPage";
 import Loader from "./components/Loader/Loader";
 import Logout from "./components/Logout/Logout";
 
+//rout
 import { Switch, Route, Redirect } from "react-router-dom";
 import axios from "axios";
 import {
@@ -294,7 +295,18 @@ class App extends Component {
 
     const key = Object.keys(data[day])[number];
 
-    if (
+    if (localStorage.getItem("userId") === "zwIfPIH6k8XvYj6o7aYPjx6tEej1") {
+      //no empty cells whit spaces
+      if (e.target.value.trim().length === 0) {
+        data[day][key].text = "";
+        data[day][key].userId = "";
+      } else {
+        data[day][key].text = e.target.value;
+        data[day][key].userId = localStorage.getItem("userId");
+      }
+
+      this.props.getContentFirst(data);
+    } else if (
       data[day][key].userId !== localStorage.getItem("userId") &&
       data[day][key].text !== ""
     ) {
@@ -333,7 +345,18 @@ class App extends Component {
 
     const key = Object.keys(data[day])[number];
 
-    if (
+    if (localStorage.getItem("userId") === "zwIfPIH6k8XvYj6o7aYPjx6tEej1") {
+      //no empty cells whit spaces
+      if (e.target.value.trim().length === 0) {
+        data[day][key].text = "";
+        data[day][key].userId = "";
+      } else {
+        data[day][key].text = e.target.value;
+        data[day][key].userId = localStorage.getItem("userId");
+      }
+
+      this.props.getContentNextFirst(data);
+    } else if (
       data[day][key].userId !== localStorage.getItem("userId") &&
       data[day][key].text !== ""
     ) {
@@ -372,7 +395,18 @@ class App extends Component {
 
     const key = Object.keys(data[day])[number];
 
-    if (
+    if (localStorage.getItem("userId") === "zwIfPIH6k8XvYj6o7aYPjx6tEej1") {
+      //no empty cells whit spaces
+      if (e.target.value.trim().length === 0) {
+        data[day][key].text = "";
+        data[day][key].userId = "";
+      } else {
+        data[day][key].text = e.target.value;
+        data[day][key].userId = localStorage.getItem("userId");
+      }
+
+      this.props.getContentSecond(data);
+    } else if (
       data[day][key].userId !== localStorage.getItem("userId") &&
       data[day][key].text !== ""
     ) {
@@ -388,6 +422,7 @@ class App extends Component {
       }, 2000);
       return;
     } else if (
+      localStorage.getItem("userId") === "zwIfPIH6k8XvYj6o7aYPjx6tEej1" ||
       data[day][key].userId === localStorage.getItem("userId") ||
       data[day][key].userId === "" ||
       data[day][key].text === ""
@@ -411,7 +446,18 @@ class App extends Component {
 
     const key = Object.keys(data[day])[number];
 
-    if (
+    if (localStorage.getItem("userId") === "zwIfPIH6k8XvYj6o7aYPjx6tEej1") {
+      //no empty cells whit spaces
+      if (e.target.value.trim().length === 0) {
+        data[day][key].text = "";
+        data[day][key].userId = "";
+      } else {
+        data[day][key].text = e.target.value;
+        data[day][key].userId = localStorage.getItem("userId");
+      }
+
+      this.props.getContentNextSecond(data);
+    } else if (
       data[day][key].userId !== localStorage.getItem("userId") &&
       data[day][key].text !== ""
     ) {
@@ -427,6 +473,7 @@ class App extends Component {
       }, 2000);
       return;
     } else if (
+      localStorage.getItem("userId") === "zwIfPIH6k8XvYj6o7aYPjx6tEej1" ||
       data[day][key].userId === localStorage.getItem("userId") ||
       data[day][key].userId === "" ||
       data[day][key].text === ""
@@ -549,6 +596,6 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
-//в будущем:
-//поработать с домашней страницей
-//добавить подтверждение регистрации по почте
+//admin:
+//andrey.zhygarev.dev@gmail.com
+//123456

@@ -20,7 +20,10 @@ const composeEnhancers =
       })
     : compose;
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(reduxThunk)));
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(reduxThunk))
+);
 
 const app = (
   <Provider store={store}>

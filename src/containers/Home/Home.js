@@ -7,9 +7,9 @@ const Home = (props) => {
       <h1>Hello!</h1>
       <h2>Your email: {localStorage.getItem("email")}</h2>
       <h4>
-        This web app is using <b>react.js</b>, <b>react-router-dom</b>,{" "}
-        <b>redux</b>, <b>react-redux</b>, <b>redux-thunk</b>, <b>axios</b>,{" "}
-        <b>is_js</b>.
+        This web app is using <b>react.js</b>, <b>firebase</b>,{" "}
+        <b>react-router-dom</b>, <b>redux</b>, <b>react-redux</b>,{" "}
+        <b>redux-thunk</b>, <b>axios</b>, <b>is_js</b>.
       </h4>
       <h4>
         Also you can use <b>Redux DevTools</b> for this app.
@@ -19,9 +19,3 @@ const Home = (props) => {
 };
 
 export default Home;
-
-//в планах:
-//выводить информацию о пользователе
-//формировать полный список забронированного
-
-//удаление аккаунта, смена пароля, смена почты и тд

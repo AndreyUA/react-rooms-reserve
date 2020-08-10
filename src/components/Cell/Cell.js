@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setTypingState } from "../../store/actions/app"
+import { setTypingState } from "../../store/actions/app";
 
 const Cell = (props) => {
   return (
@@ -63,13 +63,13 @@ const Cell = (props) => {
 function mapStateToProps(state) {
   return {
     isTyping: state.app.isTyping,
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setTypingState: () => dispatch(setTypingState())
-  }
+    setTypingState: () => dispatch(setTypingState()),
+  };
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Cell);
+export default connect(mapStateToProps, mapDispatchToProps)(Cell);

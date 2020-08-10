@@ -1,7 +1,7 @@
 import React from "react";
 import "./Alert.css";
 
-const Alert = props => {
+const Alert = (props) => {
   return (
     <div className={props.isAlert ? "Alert Alert-active" : "Alert"}>
       <div

@@ -60,7 +60,6 @@ export default function appReducer(state = initialState, action) {
         ...state,
         contentSecond: action.contentSecond,
       };
-
     case SET_CONTENT_SECOND_NEXT:
       return {
         ...state,

@@ -18,10 +18,10 @@ const times = [
   "14:00 - 14:30",
   "14:30 - 15:00",
   "15:00 - 15:30",
-  "15:30 - 16:00"
+  "15:30 - 16:00",
 ];
 
-const WeekSheet = props => {
+const WeekSheet = (props) => {
   return (
     <>
       <div className="WeekSheet">

@@ -240,6 +240,7 @@ export function logout() {
 export function autoLogin() {
   return (dispatch) => {
     const token = localStorage.getItem("token");
+    console.log(localStorage.getItem("userId"));
     if (!token) {
       dispatch(logout());
       dispatch(loggedOut());
