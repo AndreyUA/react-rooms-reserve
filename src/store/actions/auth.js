@@ -96,7 +96,7 @@ export function googleAuth(e) {
       //write token to global obj localStorage
       localStorage.setItem("token", GoogleAuth.wc.id_token);
       //write email to global obj localStorage
-      localStorage.setItem("email", GoogleAuth.Ot.yu);
+      localStorage.setItem("email", GoogleAuth.rt.$t);
       //write userId to global obj localStorage
       localStorage.setItem("userId", GoogleAuth.Da);
       //life time of auth
