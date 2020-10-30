@@ -92,11 +92,11 @@ export function googleAuth(e) {
       const expirationDate = new Date(
         new Date().getTime() + GoogleAuth.wc.expires_in * 1000
       );
-      
+
       //write token to global obj localStorage
       localStorage.setItem("token", GoogleAuth.wc.id_token);
       //write email to global obj localStorage
-      localStorage.setItem("email", GoogleAuth.nt.Wt);
+      localStorage.setItem("email", "Authorization by GoogleAuth");
       //write userId to global obj localStorage
       localStorage.setItem("userId", GoogleAuth.Da);
       //life time of auth
