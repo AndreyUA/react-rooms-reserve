@@ -90,11 +90,11 @@ export function googleAuth(e) {
       });
 
       const expirationDate = new Date(
-        new Date().getTime() + GoogleAuth.wc.expires_in * 1000
+        new Date().getTime() + GoogleAuth.xc.expires_in * 1000
       );
 
       //write token to global obj localStorage
-      localStorage.setItem("token", GoogleAuth.wc.id_token);
+      localStorage.setItem("token", GoogleAuth.xc.id_token);
       //write email to global obj localStorage
       localStorage.setItem("email", "Authorization by GoogleAuth");
       //write userId to global obj localStorage
@@ -102,8 +102,8 @@ export function googleAuth(e) {
       //life time of auth
       localStorage.setItem("expirationDate", expirationDate);
 
-      dispatch(authSuccess(GoogleAuth.wc.id_token));
-      dispatch(autoLogout(GoogleAuth.wc.expires_in));
+      dispatch(authSuccess(GoogleAuth.xc.id_token));
+      dispatch(autoLogout(GoogleAuth.xc.expires_in));
     } catch (error) {
       console.log(error);
     }
@@ -240,7 +240,7 @@ export function logout() {
 export function autoLogin() {
   return (dispatch) => {
     const token = localStorage.getItem("token");
-    console.log(localStorage.getItem("userId"));
+
     if (!token) {
       dispatch(logout());
       dispatch(loggedOut());
